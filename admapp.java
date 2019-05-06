@@ -35,6 +35,7 @@ public class admapp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane pane = new BorderPane();
 		VBox meny = new VBox();
+		meny.setPadding(new Insets(20,20,0,20));
 		pane.setLeft(meny);
 		Scene scene = new Scene(pane, 850, 750);
 		
@@ -44,18 +45,34 @@ public class admapp extends Application{
 		primaryStage.setResizable(false);
 		
 		Button regNavn = new Button("Registrer deltaker");
-		meny.getChildren().add(regNavn);
-		
-		TextField txTextField = new TextField("HEI");
+		regNavn.setMinWidth(100);
+		regNavn.setMaxWidth(150);
+		Button regPartier = new Button("Registrer parti");
+		regPartier.setMinWidth(100);
+		regPartier.setMaxWidth(150);
+		Button regResultat = new Button("Registrer resultat");
+		regResultat.setMinWidth(100);
+		regResultat.setMaxWidth(150);
+		meny.getChildren().addAll(regNavn, regPartier, regResultat);
 		
 		regNavn.setOnMouseClicked(e -> {
 			NewStage();
 			
 		});
+		
+		regPartier.setOnMouseClicked(e -> {
+			
+			
+		});
+		
+		regResultat.setOnMouseClicked(e -> {
+			
+			
+		});
 
 	}
 	Button registrer;
-	Button top10;
+	Button avbryt;
 	void NewStage()  {
 	    Stage subStage = new Stage();
 	    subStage.setTitle("Registrer deltaker");
@@ -64,11 +81,11 @@ public class admapp extends Application{
 	  
 	    Text deltakerNavn = new Text("Skriv fullt navn");
 	    registrer = new Button("     Lagre deltaker     ");
-	    top10 = new Button("           Avbryt           ");
+	    avbryt = new Button("           Avbryt           ");
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn, navnFelt, registrer, top10);
+	    layout.getChildren().addAll(deltakerNavn, navnFelt, registrer, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
@@ -76,7 +93,10 @@ public class admapp extends Application{
 	    
 	    
 	    registrer.setOnMouseClicked(e -> {});
-
+	    
+	    avbryt.setOnMouseClicked(e -> {
+	    	subStage.close();
+	    });
 	    
 }
 
