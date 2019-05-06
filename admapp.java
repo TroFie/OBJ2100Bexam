@@ -33,6 +33,8 @@ public class admapp extends Application{
 
 	public ArrayList<Deltaker>deltakerListe = new ArrayList<Deltaker>();
 	
+	public ArrayList<Deltaker>partiListe = new ArrayList<Deltaker>();
+	
 	public static void main(String[] args)throws Exception {
 		
 		launch(args);
@@ -91,7 +93,7 @@ public class admapp extends Application{
 		});
 		
 		regPartier.setOnMouseClicked(e -> {
-			
+			registrerParti();
 			
 		});
 		
@@ -186,6 +188,105 @@ public class admapp extends Application{
 	    });
 	    
 }
+	void registrerParti()  {
+	    Stage subStage = new Stage();
+	    subStage.setHeight(500);
+		subStage.setResizable(false);
+	    subStage.setTitle("Registrer parti");
+	            
+	    TextField navnFelt1 = new TextField();
+	    TextField navnFelt2 = new TextField();
+	    TextField datoTid   = new TextField();
+	  
+	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
+	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
+	    Text dato 		   = new Text("Dato og tid");
+	    
+	    Button lagreParti = new Button("Lagre sjakkparti");
+	    lagreParti.setMinWidth(100);
+	    lagreParti.setMaxWidth(150);
+	    
+	    Button seListe = new Button("Se liste");
+	    seListe.setMinWidth(100);
+	    seListe.setMaxWidth(150);
+	    
+	    Button avbryt = new Button("Avbryt");
+	    avbryt.setMinWidth(100);
+	    avbryt.setMaxWidth(150);
+	    
+	    VBox layout = new VBox(10);
+	    layout.setPadding(new Insets(20,20,20,20));
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, dato, datoTid, lagreParti, seListe, avbryt);
+	    
+	    Scene scene = new Scene(layout, 300, 200);
+	    subStage.setScene(scene);
+	    subStage.show();
+	    
+	    
+	    lagreParti.setOnMouseClicked(e -> {
+	    	partiListe.add(new Deltaker(navnFelt1.getText()));
+	    	partiListe.add(new Deltaker(navnFelt2.getText()));
+	    	partiListe.add(new Deltaker(datoTid.getText()));
+	    	
+	        File file = new File("parti.txt");
+	        try {
+	            FileOutputStream fos = new FileOutputStream(file);
+	            ObjectOutputStream oos = new ObjectOutputStream(fos);
+	            oos.writeObject(partiListe);
+	            oos.close();
+	            
+	        } catch (FileNotFoundException ex) {
+	            ex.printStackTrace();
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    
+	    	// Kopi på txt format
+	    	File file2 = new File("partiKopi.txt");
+			try(
+				FileWriter fileWriter = new FileWriter(file2, true);
+				PrintWriter output	= new PrintWriter(fileWriter);
+				) {
+				output.write(navnFelt1.getText().toUpperCase() + " - ");
+				output.write(navnFelt2.getText().toUpperCase() + " Dato: ");
+				output.write(datoTid.getText().toUpperCase() + "\n" + "\n");
+				}
+		         catch (FileNotFoundException ex) {
+		            ex.printStackTrace();
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		        } catch (NoSuchElementException e2) {
+					
+				}
+	        navnFelt1.setText("");
+	        navnFelt2.setText("");
+	        datoTid.setText("");
+	        System.out.println("Sjakkparti lagret");
+	    });
+	    
+	    seListe.setOnMouseClicked(e -> {
+	    	File file = new File("partiKopi.txt");
+	    	Scanner input;
+			try {
+				input = new Scanner(file);
+				
+				while (input.hasNextLine()) {
+					String navn = input.nextLine();
+					System.out.println(navn + " " );
+				}
+				input.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
+	    });
+	    
+	    avbryt.setOnMouseClicked(e -> {
+	    	subStage.close();
+	    });
+	    
+}
+	
 	void registrerResultat() {
 		Stage subStage = new Stage();
 		subStage.setHeight(500);
