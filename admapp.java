@@ -31,9 +31,9 @@ import javafx.stage.Stage;
 
 public class admapp extends Application{
 
-	public ArrayList<Deltaker>deltakerListe = new ArrayList<Deltaker>();
+	public ArrayList<Deltaker> deltakerListe = new ArrayList<Deltaker>();
 	
-	public ArrayList<Deltaker>partiListe = new ArrayList<Deltaker>();
+	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -64,6 +64,29 @@ public class admapp extends Application{
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
+        
+        File partiFile = new File("partier.txt");
+        try {
+            FileInputStream fis = new FileInputStream(partiFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+          
+            ArrayList<Parti> deserializeParti = (ArrayList<Parti>)ois.readObject();
+            ois.close();
+            
+            Iterator<Parti> iter = deserializeParti.iterator();
+            while(iter.hasNext()){
+                Parti s = iter.next();
+                partiListe.add(new Parti(s.getName1(), s.getName2(), s.getDato()));
+            }
+            
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
 		// Pane        
 		BorderPane pane = new BorderPane();
 		VBox meny = new VBox();
@@ -224,34 +247,33 @@ public class admapp extends Application{
 	    
 	    
 	    lagreParti.setOnMouseClicked(e -> {
-	    	partiListe.add(new Deltaker(navnFelt1.getText()));
-	    	partiListe.add(new Deltaker(navnFelt2.getText()));
-	    	partiListe.add(new Deltaker(datoTid.getText()));
-	    	
-	        File file = new File("parti.txt");
-	        try {
-	            FileOutputStream fos = new FileOutputStream(file);
-	            ObjectOutputStream oos = new ObjectOutputStream(fos);
-	            oos.writeObject(partiListe);
-	            oos.close();
+	    	partiListe.add(new Parti(navnFelt1.getText(), navnFelt2.getText(), datoTid.getText()));
+
+	    	File file = new File("partier.txt");
+	    	try {
+	    		FileOutputStream fos = new FileOutputStream(file);
+	    		ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    		oos.writeObject(partiListe);
+	    		oos.close();
 	            
 	        } catch (FileNotFoundException ex) {
-	            ex.printStackTrace();
+	           ex.printStackTrace();
 	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
-	    
+	           ex.printStackTrace();
+	       	}
+	    	
+	    	
 	    	// Kopi på txt format
 	    	File file2 = new File("partiKopi.txt");
 			try(
 				FileWriter fileWriter = new FileWriter(file2, true);
 				PrintWriter output	= new PrintWriter(fileWriter);
 				) {
-				output.write(navnFelt1.getText().toUpperCase() + " - ");
-				output.write(navnFelt2.getText().toUpperCase() + " Dato: ");
-				output.write(datoTid.getText().toUpperCase() + "\n" + "\n");
-				}
-		         catch (FileNotFoundException ex) {
+				output.write(navnFelt1.getText().toUpperCase() + " - "); 
+				output.write(navnFelt2.getText().toUpperCase() + " Dato: "); 
+				output.write(datoTid.getText().toUpperCase() + "\n" + "\n"); 
+				} 
+				  catch (FileNotFoundException ex) {
 		            ex.printStackTrace();
 		        } catch (IOException ex) {
 		            ex.printStackTrace();
@@ -263,6 +285,7 @@ public class admapp extends Application{
 	        datoTid.setText("");
 	        System.out.println("Sjakkparti lagret");
 	    });
+	    
 	    
 	    seListe.setOnMouseClicked(e -> {
 	    	File file = new File("partiKopi.txt");
