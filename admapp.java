@@ -148,30 +148,80 @@ public class admapp extends Application{
 	    
 }
 	
+	Button regParti;
+	Button partiListe;
 	void nyttParti()  {
 	    Stage subStage = new Stage();
 	    subStage.setTitle("Registrer sjakk-parti");
 	            
-	    TextField navnFelt = new TextField();
+	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
 	    TextField datoTid = new TextField();
 	  
 	    Text deltakerNavn1 = new Text("1. deltaker");
 	    Text deltakerNavn2 = new Text("2. deltaker");
 	    Text dato = new Text("Dato og tid");
-	    registrer = new Button("     Lagre parti     ");
-	    avbryt = new Button("           Avbryt           ");
+	    
+	    regParti = new Button("Lagre parti");
+	    regParti.setMinWidth(100);
+	    regParti.setMaxWidth(150);
+	    
+	    partiListe = new Button("Se liste");
+	    partiListe.setMinWidth(100);
+	    partiListe.setMaxWidth(150);
+	    
+	    avbryt = new Button("Avbryt");
+	    avbryt.setMinWidth(100);
+	    avbryt.setMaxWidth(150);
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt, deltakerNavn2, navnFelt2, dato, datoTid, registrer, avbryt);
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, dato, datoTid, regParti, partiListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 300);
 	    subStage.setScene(scene);
 	    subStage.show();
 	    
 	    
-	    registrer.setOnMouseClicked(e -> {});
+	    regParti.setOnMouseClicked(e -> {
+	    	File file = new File("parti.txt");
+			try(
+				FileWriter fileWriter = new FileWriter(file, true);
+				PrintWriter output	= new PrintWriter(fileWriter);
+				) {
+				output.write(navnFelt1.getText().toUpperCase() + " - ");
+				output.write(navnFelt2.getText().toUpperCase() + " Dato: ");
+				output.write(datoTid.getText().toUpperCase() + "\n" + "\n");
+				}
+		         catch (FileNotFoundException ex) {
+		            ex.printStackTrace();
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		        } catch (NoSuchElementException e2) {
+					
+				}
+	        navnFelt1.setText("");
+	        navnFelt2.setText("");
+	        datoTid.setText("");
+	        System.out.println("Sjakkparti lagret");
+	    });
+	    
+	    partiListe.setOnMouseClicked(e -> {
+	    	File file = new File("parti.txt");
+	    	Scanner input;
+			try {
+				input = new Scanner(file);
+				
+				while (input.hasNextLine()) {
+					String navn = input.nextLine();
+					System.out.println(navn + " " );
+				}
+				input.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
+	    });
 	    
 	    avbryt.setOnMouseClicked(e -> {
 	    	subStage.close();
