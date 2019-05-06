@@ -61,7 +61,7 @@ public class admapp extends Application{
 		});
 		
 		regPartier.setOnMouseClicked(e -> {
-			
+			nyttParti();
 			
 		});
 		
@@ -88,6 +88,37 @@ public class admapp extends Application{
 	    layout.getChildren().addAll(deltakerNavn, navnFelt, registrer, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
+	    subStage.setScene(scene);
+	    subStage.show();
+	    
+	    
+	    registrer.setOnMouseClicked(e -> {});
+	    
+	    avbryt.setOnMouseClicked(e -> {
+	    	subStage.close();
+	    });
+	    
+}
+	
+	void nyttParti()  {
+	    Stage subStage = new Stage();
+	    subStage.setTitle("Registrer sjakk-parti");
+	            
+	    TextField navnFelt = new TextField();
+	    TextField navnFelt2 = new TextField();
+	    TextField datoTid = new TextField();
+	  
+	    Text deltakerNavn1 = new Text("1. deltaker");
+	    Text deltakerNavn2 = new Text("2. deltaker");
+	    Text dato = new Text("Dato og tid");
+	    registrer = new Button("     Lagre parti     ");
+	    avbryt = new Button("           Avbryt           ");
+	    
+	    VBox layout = new VBox(10);
+	    layout.setPadding(new Insets(20,20,20,20));
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt, deltakerNavn2, navnFelt2, dato, datoTid, registrer, avbryt);
+	    
+	    Scene scene = new Scene(layout, 300, 300);
 	    subStage.setScene(scene);
 	    subStage.show();
 	    
