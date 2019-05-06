@@ -1,13 +1,18 @@
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -26,9 +31,10 @@ import javafx.stage.Stage;
 
 public class admapp extends Application{
 
+	public ArrayList<Object> deltakerListe = new ArrayList<Object>();
+	
 	public static void main(String[] args) {
 		launch(args);
-
 	}
 
 	@Override
@@ -71,7 +77,8 @@ public class admapp extends Application{
 		});
 
 	}
-	Button registrer;
+	Button lagreDeltaker;
+	Button seListe;
 	Button avbryt;
 	void NewStage()  {
 	    Stage subStage = new Stage();
@@ -80,19 +87,60 @@ public class admapp extends Application{
 	    TextField navnFelt = new TextField();
 	  
 	    Text deltakerNavn = new Text("Skriv fullt navn");
-	    registrer = new Button("     Lagre deltaker     ");
-	    avbryt = new Button("           Avbryt           ");
+	    lagreDeltaker = new Button("Lagre deltaker");
+	    lagreDeltaker.setMinWidth(100);
+	    lagreDeltaker.setMaxWidth(150);
+	    seListe = new Button("Se liste");
+	    seListe.setMinWidth(100);
+	    seListe.setMaxWidth(150);
+	    avbryt = new Button("Avbryt");
+	    avbryt.setMinWidth(100);
+	    avbryt.setMaxWidth(150);
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn, navnFelt, registrer, avbryt);
+	    layout.getChildren().addAll(deltakerNavn, navnFelt, lagreDeltaker, seListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
 	    subStage.show();
 	    
 	    
-	    registrer.setOnMouseClicked(e -> {});
+	    lagreDeltaker.setOnMouseClicked(e -> {
+	    	File file = new File("deltakere.txt");
+			try(
+				FileWriter fileWriter = new FileWriter(file, true);
+				PrintWriter output	= new PrintWriter(fileWriter);
+				) {
+				output.write(navnFelt.getText().toUpperCase() + "\n");
+				}
+		         catch (FileNotFoundException ex) {
+		            ex.printStackTrace();
+		        } catch (IOException ex) {
+		            ex.printStackTrace();
+		        } catch (NoSuchElementException e2) {
+					
+				}
+	        navnFelt.setText("");
+	        System.out.println("Deltaker lagret");
+	    });
+	    
+	    seListe.setOnMouseClicked(e -> {
+	    	File file = new File("deltakere.txt");
+	    	Scanner input;
+			try {
+				input = new Scanner(file);
+				
+				while (input.hasNextLine()) {
+					String navn = input.nextLine();
+					System.out.println(navn + " " );
+				}
+				input.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
+	    });
 	    
 	    avbryt.setOnMouseClicked(e -> {
 	    	subStage.close();
