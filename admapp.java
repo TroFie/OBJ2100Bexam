@@ -21,6 +21,8 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -318,6 +320,7 @@ public class admapp extends Application{
 	            
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
+	    MenuButton meny = new MenuButton("Parti");
 	    
 	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
 	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
@@ -333,14 +336,26 @@ public class admapp extends Application{
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2,  lagreResultat, seResultatListe, avbryt);
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, meny,  lagreResultat, seResultatListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
 	    subStage.show();
 	    
+	    for(int i=0; i<partiListe.size(); i++) {
+	    	String navn1 = partiListe.get(i).getName1();
+	    	String navn2 = partiListe.get(i).getName2();
+	    	String dato = partiListe.get(i).getDato();
+	    	MenuItem a = new MenuItem(navn1 + " - " + navn2 + " - " + dato);
+	    	meny.getItems().add(a);
+	    }
+	    
+	    lagreResultat.setOnMouseClicked(e -> {
+	    	
+	    });
+	    
 	    avbryt.setOnMouseClicked(e -> {
-	    	subStage.close();
+	    	System.out.println(partiListe.size());
 	    });
 	}
 
