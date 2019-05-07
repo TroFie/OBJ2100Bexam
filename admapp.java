@@ -40,11 +40,15 @@ public class admapp extends Application{
 	
 	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
 	
-	MenuItem a;
+	public String[]trekkHvit = new String[500];
+	public String[]trekkSort = new String[500];
 	
+	MenuItem a;
 	MenuItem remisItem;
 	MenuItem b;
 	MenuItem b2;
+	int trekkTellerHvit = 0;
+	int trekkTellerSort = 0;
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -323,28 +327,47 @@ public class admapp extends Application{
 	
 	void registrerResultat() {
 		Stage subStage = new Stage();
-		subStage.setHeight(500);
+		subStage.setHeight(700);
 		subStage.setResizable(false);
 	    subStage.setTitle("Registrer resultat");
 	            
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
 	    TextField datoFelt = new TextField();
+	    TextField trekkFeltHvit = new TextField();
+	    TextField trekkFeltSort = new TextField();
 	    TextField resultatFelt = new TextField();
+	    
 	    MenuButton meny = new MenuButton("Parti");
 	    MenuButton resultatMeny = new MenuButton("Resultat");
 	    
-	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
-	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
+	    Text deltakerNavn1 = new Text("Navn på deltaker 1 (Hvit)");
+	    Text deltakerNavn2 = new Text("Navn på deltaker 2 (Sort)");
 	    Text datoTxt = new Text("Dato");
-	    Text resultatTxt = new Text("Resultat:");
+	    Text trekkTxt = new Text("Fyll inn trekk");
+	    
+	    Button byttPlass = new Button("Bytt plass");
+	    Button regTrekkHvit = new Button("Registrer trekk (Hvit)");
+	    Button regTrekkSort = new Button("Registrer trekk (Sort)");
 	    Button lagreResultat = new Button("Lagre resultat");
-	    lagreResultat.setMinWidth(100);
-	    lagreResultat.setMaxWidth(150);
 	    Button seResultatListe = new Button("Se liste");
+	    Button avbryt = new Button("Avbryt");
+	    
+	    
+	    regTrekkSort.setMinWidth(100);
+	    regTrekkSort.setMaxWidth(150);
+	    regTrekkHvit.setMinWidth(100);
+	    regTrekkHvit.setMaxWidth(150);
+	    resultatMeny.setMinWidth(100);
+	    resultatMeny.setMaxWidth(150);
+	    byttPlass.setMinWidth(100);
+	    byttPlass.setMaxWidth(150);
+	    meny.setMinWidth(100);
+	    meny.setMaxWidth(150);
 	    seResultatListe.setMinWidth(100);
 	    seResultatListe.setMaxWidth(150);
-	    Button avbryt = new Button("Avbryt");
+	    lagreResultat.setMinWidth(100);
+	    lagreResultat.setMaxWidth(150);
 	    avbryt.setMinWidth(100);
 	    avbryt.setMaxWidth(150);
 	    
@@ -355,7 +378,8 @@ public class admapp extends Application{
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(10,10,10,10));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, datoTxt, datoFelt, meny, resultatMeny, resultatFelt,  lagreResultat, seResultatListe, avbryt);
+	    layout.getChildren().addAll(meny, deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2,  byttPlass, datoTxt, datoFelt,
+	    		trekkTxt, trekkFeltHvit, regTrekkHvit, trekkFeltSort, regTrekkSort, resultatMeny, resultatFelt, lagreResultat, seResultatListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
@@ -391,11 +415,32 @@ public class admapp extends Application{
 	    r.setOnAction(e->{
 	    	resultatFelt.setText(r.getText());
 	    });
+	    byttPlass.setOnMouseClicked(e->{
+	    	String n1 = navnFelt1.getText();
+	    	navnFelt1.setText(navnFelt2.getText());
+	    	navnFelt2.setText(n1);
+	    });
+	    regTrekkHvit.setOnMouseClicked(e->{
+	    	if(trekkFeltHvit.getText().isEmpty() == false) {
+	    		trekkHvit[trekkTellerHvit] = trekkFeltHvit.getText();
+	    		trekkFeltHvit.setText("");
+	    		trekkTellerHvit ++;
+	    	}
+	    });
+	    regTrekkSort.setOnMouseClicked(e->{
+	    	if(trekkFeltSort.getText().isEmpty() == false) {
+	    		trekkSort[trekkTellerSort] = trekkFeltSort.getText();
+	    		trekkFeltSort.setText("");
+	    		trekkTellerSort ++;
+	    	}
+	    });
 	    
 
 	    // Oppretter resultat-filer
 	    lagreResultat.setOnMouseClicked(e -> {
-	    	
+	    	for(int i=0; i<trekkTellerHvit; i++) {
+	    		System.out.println(trekkHvit[i]);
+	    	}
 	    });
 	    
 	    avbryt.setOnMouseClicked(e -> {
