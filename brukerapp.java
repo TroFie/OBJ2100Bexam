@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
@@ -19,11 +20,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -37,9 +40,12 @@ public class brukerapp extends Application {
 	double seier = 1;
 	double remis = 0.5;
 	double tap = 0;
+	
+	
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
 		BorderPane pane = new BorderPane();
 		VBox meny = new VBox();
 		meny.setPadding(new Insets(20, 20, 0, 20));
@@ -50,10 +56,8 @@ public class brukerapp extends Application {
 		primaryStage.setScene( scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
-		
-	  
 
-	        // Knapper
+	    // Knapper
 		Button openScore = new Button("Vis rangering");
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
@@ -79,40 +83,44 @@ public class brukerapp extends Application {
 		});
 		
 		
-		/*
+		
 		visBrett.setOnMouseClicked(e -> {
 			visBrett();
 		});
 		
-		*/
+		
 	}
 	
 	// Testa litt, funker ikke veldig bra
-/*
+
 	void visBrett() {
-		 GridPane root = new GridPane();
-		    final int size = 8;
+		
+		int WIDTH = 80;
+		int HEIGHT = 80;
+		int BOARD_SIZE = 640;
 	
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col ++) {
-                StackPane square = new StackPane();
-                String color ;
-                if ((row + col) % 2 == 0) {
-                    color = "white";
-                } else {
-                    color = "black";
-                }
-                square.setStyle("-fx-background-color: "+color+";");
-                root.add(square, col, row);
-            }
-        }
-        for (int i = 0; i < size; i++) {
-            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
-        }
-   
+		Stage subStage = new Stage();
+		Group root = new Group();
+		Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
+		subStage.setScene(scene);
+		for (int x = 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) {
+			for (int y = 0; y < BOARD_SIZE; y = y + HEIGHT) {
+				if (c % 2 == 0) {
+					Rectangle r = new Rectangle();
+					r.setX(x);
+					r.setY(y);
+					r.setWidth(WIDTH);
+					r.setHeight(HEIGHT);
+
+					root.getChildren().add(r);
+				}
+				c++;
+			}
+		}
+		
+		subStage.show();
 	}
-	*/
+
 	void scoreBoard() {
 		Stage subStage = new Stage();
 		subStage.setTitle("Scorboard");
