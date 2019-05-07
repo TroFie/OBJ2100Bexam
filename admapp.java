@@ -18,6 +18,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,6 +38,8 @@ public class admapp extends Application{
 	public ArrayList<Deltaker> deltakerListe = new ArrayList<Deltaker>();
 	
 	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
+	
+	MenuItem a;
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -320,10 +324,12 @@ public class admapp extends Application{
 	            
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
+	    TextField datoFelt = new TextField();
 	    MenuButton meny = new MenuButton("Parti");
 	    
 	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
 	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
+	    Text datoTxt = new Text("Dato");
 	    Button lagreResultat = new Button("Lagre resultat");
 	    lagreResultat.setMinWidth(100);
 	    lagreResultat.setMaxWidth(150);
@@ -336,19 +342,30 @@ public class admapp extends Application{
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, meny,  lagreResultat, seResultatListe, avbryt);
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, datoTxt, datoFelt,  meny,  lagreResultat, seResultatListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
 	    subStage.show();
 	    
+	    // Bruker registrerte partier til å fylle ut meny-valgmuligheter
 	    for(int i=0; i<partiListe.size(); i++) {
 	    	String navn1 = partiListe.get(i).getName1();
 	    	String navn2 = partiListe.get(i).getName2();
 	    	String dato = partiListe.get(i).getDato();
 	    	MenuItem a = new MenuItem(navn1 + " - " + navn2 + " - " + dato);
 	    	meny.getItems().add(a);
+	    	a.setOnAction(e->{
+	    		navnFelt1.setText(navn1);
+	    		navnFelt2.setText(navn2);
+	    		datoFelt.setText(dato);
+	    	});
 	    }
+	    
+	    
+	    
+		
+	    
 	    
 	    lagreResultat.setOnMouseClicked(e -> {
 	    	
