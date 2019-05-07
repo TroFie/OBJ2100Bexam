@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -40,6 +41,10 @@ public class admapp extends Application{
 	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
 	
 	MenuItem a;
+	
+	MenuItem remisItem;
+	MenuItem b;
+	MenuItem b2;
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -325,11 +330,14 @@ public class admapp extends Application{
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
 	    TextField datoFelt = new TextField();
+	    TextField resultatFelt = new TextField();
 	    MenuButton meny = new MenuButton("Parti");
+	    MenuButton resultatMeny = new MenuButton("Resultat");
 	    
 	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
 	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
 	    Text datoTxt = new Text("Dato");
+	    Text resultatTxt = new Text("Resultat:");
 	    Button lagreResultat = new Button("Lagre resultat");
 	    lagreResultat.setMinWidth(100);
 	    lagreResultat.setMaxWidth(150);
@@ -340,13 +348,23 @@ public class admapp extends Application{
 	    avbryt.setMinWidth(100);
 	    avbryt.setMaxWidth(150);
 	    
+	    navnFelt1.setEditable(false);
+	    navnFelt2.setEditable(false);
+	    datoFelt.setEditable(false);
+	    resultatFelt.setEditable(false);
+	    
 	    VBox layout = new VBox(10);
-	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, datoTxt, datoFelt,  meny,  lagreResultat, seResultatListe, avbryt);
+	    layout.setPadding(new Insets(10,10,10,10));
+	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, datoTxt, datoFelt, meny, resultatMeny, resultatFelt,  lagreResultat, seResultatListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
 	    subStage.show();
+	    
+	    MenuItem d1 = new MenuItem("Deltaker 1");
+	    MenuItem d2 = new MenuItem("Deltaker 2");
+	    MenuItem r = new MenuItem("Remis");
+	    resultatMeny.getItems().addAll(d1,d2,r);
 	    
 	    // Bruker registrerte partier til å fylle ut meny-valgmuligheter
 	    for(int i=0; i<partiListe.size(); i++) {
@@ -355,18 +373,27 @@ public class admapp extends Application{
 	    	String dato = partiListe.get(i).getDato();
 	    	MenuItem a = new MenuItem(navn1 + " - " + navn2 + " - " + dato);
 	    	meny.getItems().add(a);
+	    	// Fyller ut felter
 	    	a.setOnAction(e->{
 	    		navnFelt1.setText(navn1);
 	    		navnFelt2.setText(navn2);
 	    		datoFelt.setText(dato);
+	    		removeTxt(resultatFelt);
 	    	});
 	    }
 	    
+	    d1.setOnAction(e->{
+	    	resultatFelt.setText(navnFelt1.getText());
+	    });
+	    d2.setOnAction(e->{
+	    	resultatFelt.setText(navnFelt2.getText());
+	    });
+	    r.setOnAction(e->{
+	    	resultatFelt.setText(r.getText());
+	    });
 	    
-	    
-		
-	    
-	    
+
+	    // Oppretter resultat-filer
 	    lagreResultat.setOnMouseClicked(e -> {
 	    	
 	    });
@@ -374,6 +401,10 @@ public class admapp extends Application{
 	    avbryt.setOnMouseClicked(e -> {
 	    	System.out.println(partiListe.size());
 	    });
+	}
+	
+	public void removeTxt(TextField r) {
+		r.setText("");
 	}
 
 }
