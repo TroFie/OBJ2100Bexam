@@ -43,6 +43,8 @@ public class admapp extends Application{
 	
 	public ArrayList<Deltaker> deltakerListe2 = new ArrayList<Deltaker>();
 	
+	public ArrayList<Deltaker> deltakerListe3 = new ArrayList<Deltaker>();
+	
 	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
 	
 	public ArrayList<Trekk> trekkListe = new ArrayList<Trekk>();
@@ -339,7 +341,6 @@ public class admapp extends Application{
 	
 	void registrerResultat() {
 
-    	trekkListe.add(new Trekk("TREKK: "));
 		Stage subStage = new Stage();
 		subStage.setHeight(600);
 		subStage.setResizable(false);
@@ -444,7 +445,7 @@ public class admapp extends Application{
 	    lagreResultat.setOnMouseClicked(e -> {
 	    	if(resultatFelt.getText().isEmpty() == false && navnFelt1.getText().isEmpty() == false) {
 	    	deltakerListe2.add(new Deltaker(navnFelt1.getText()));
-	    	deltakerListe2.add(new Deltaker(navnFelt2.getText()));
+	    	deltakerListe3.add(new Deltaker(navnFelt2.getText()));
 	    	datoListe.add(new Date());
 	    	resultatListe.add(new Resultat(resultatFelt.getText()));
 	    	
@@ -453,6 +454,7 @@ public class admapp extends Application{
 	    		FileOutputStream fos = new FileOutputStream(file);
 	    		ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    		oos.writeObject(deltakerListe2);
+	    		oos.writeObject(deltakerListe3);
 	    		oos.writeObject(datoListe);
 	    		oos.writeObject(resultatListe);
 	    		oos.writeObject(trekkListe);
@@ -469,6 +471,8 @@ public class admapp extends Application{
 				) {
 					ArrayList<Deltaker> t1 = (ArrayList<Deltaker>)(input.readObject());
 					System.out.println(t1.toString());
+					ArrayList<Deltaker> t = (ArrayList<Deltaker>)(input.readObject());
+					System.out.println(t.toString());
 					ArrayList<Date> t2 = (ArrayList<Date>)(input.readObject());
 					System.out.println(t2.toString());
 					ArrayList<Resultat> t3 = (ArrayList<Resultat>)(input.readObject());
