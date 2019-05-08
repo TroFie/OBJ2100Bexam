@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -26,7 +28,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -34,7 +35,6 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -42,24 +42,14 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class brukerapp extends Application {
 	
@@ -94,11 +84,11 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button finnPartier = new Button("Søk etter parti");
+		Button finnPartier = new Button("Sï¿½k etter parti");
 		finnPartier.setMinWidth(100);
 		finnPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("Åpne brettet");
+		Button visBrett = new Button("ï¿½pne brettet");
 		visBrett.setMinWidth(100);
 		visBrett.setMaxWidth(150);
 
@@ -123,15 +113,6 @@ public class brukerapp extends Application {
 		});
 
 	}
-	/*
-	 * void visBrett() { int WIDTH = 80; int HEIGHT = 80; int BOARD_SIZE = 640;
-	 * Stage subStage = new Stage(); Group root = new Group(); Scene scene = new
-	 * Scene(root, BOARD_SIZE, BOARD_SIZE); subStage.setScene(scene); for (int x =
-	 * 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) { for (int y = 0; y <
-	 * BOARD_SIZE; y = y + HEIGHT) { if (c % 2 == 0) { Rectangle r = new
-	 * Rectangle(); r.setX(x); r.setY(y); r.setWidth(WIDTH); r.setHeight(HEIGHT);
-	 * root.getChildren().add(r); } c++; } } subStage.show(); }
-	 */
 
 	void visBrett() {
 
@@ -177,7 +158,7 @@ public class brukerapp extends Application {
             root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true)); 
         } 
 		// Svarte brikker
-		// Svart tï¿½rn
+		// Black rook 2
 		ImageView imgViewBRook = new ImageView();
 		Image imageBRook = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook.setImage(imageBRook);
@@ -185,7 +166,7 @@ public class brukerapp extends Application {
 		imgViewBRook.setFitWidth(windowSize/11);
 		squares[0][0].setGraphic(imgViewBRook);
 		
-		// Svart tï¿½rn 2
+		// Black rook 2
 		ImageView imgViewBRook2 = new ImageView();
 		Image imageBRook2 = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook2.setImage(imageBRook2);
@@ -193,7 +174,7 @@ public class brukerapp extends Application {
 		imgViewBRook2.setFitWidth(windowSize/11);
 		squares[0][7].setGraphic(imgViewBRook2);
 		
-		// Svart hest
+		// Black knight 2
 		ImageView imgViewBKnight = new ImageView();
 		Image imageBKnight = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
 		imgViewBKnight.setImage(imageBKnight);
@@ -201,7 +182,7 @@ public class brukerapp extends Application {
 		imgViewBKnight.setFitWidth(windowSize/11);
 		squares[0][1].setGraphic(imgViewBKnight);
 		
-		// Svart hest 2
+		// Black knight 2
 		ImageView imgViewBKnight2 = new ImageView();
 		Image imageBKnight2 = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
 		imgViewBKnight2.setImage(imageBKnight2);
@@ -209,7 +190,7 @@ public class brukerapp extends Application {
 		imgViewBKnight2.setFitWidth(windowSize/11);
 		squares[0][6].setGraphic(imgViewBKnight2);
 		
-		// Svart lï¿½per
+		// Black bishop 2
 		ImageView imgViewBBishop = new ImageView();
 		Image imageBBishop = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop.setImage(imageBBishop);
@@ -217,7 +198,7 @@ public class brukerapp extends Application {
 		imgViewBBishop.setFitWidth(windowSize/11);
 		squares[0][2].setGraphic(imgViewBBishop);
 		
-		// Svart lï¿½per 2
+		// Black bishop 2
 		ImageView imgViewBBishop2 = new ImageView();
 		Image imageBBishop2 = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop2.setImage(imageBBishop2);
@@ -225,7 +206,7 @@ public class brukerapp extends Application {
 		imgViewBBishop2.setFitWidth(windowSize/11);
 		squares[0][5].setGraphic(imgViewBBishop2);
 		
-		// Svart dronning
+		// Black queen
 		ImageView imgViewBQueen = new ImageView();
 		Image imageBQueen = new Image(brukerapp.class.getResourceAsStream(Black_Queen));
 		imgViewBQueen.setImage(imageBQueen);
@@ -233,7 +214,7 @@ public class brukerapp extends Application {
 		imgViewBQueen.setFitWidth(windowSize/11);
 		squares[0][3].setGraphic(imgViewBQueen);
 		
-		// Svart konge
+		// Black king
 		ImageView imgViewBKing = new ImageView();
 		Image imageBKing = new Image(brukerapp.class.getResourceAsStream(Black_King));
 		imgViewBKing.setImage(imageBKing);
@@ -251,7 +232,7 @@ public class brukerapp extends Application {
 		}
 		
 		// Hvite brikker
-		// Hvitt tï¿½rn
+		// White rook
 		ImageView imgViewWRook = new ImageView();
 		Image imageWRook = new Image(brukerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook.setImage(imageWRook);
@@ -259,7 +240,7 @@ public class brukerapp extends Application {
 		imgViewWRook.setFitWidth(windowSize/11);
 		squares[7][0].setGraphic(imgViewWRook);
 		
-		// Hvitt tï¿½rn 2
+		// White rook 2
 		ImageView imgViewWRook2 = new ImageView();
 		Image imageWRook2 = new Image(brukerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook2.setImage(imageWRook2);
@@ -267,7 +248,7 @@ public class brukerapp extends Application {
 		imgViewWRook2.setFitWidth(windowSize/11);
 		squares[7][7].setGraphic(imgViewWRook2);
 		
-		// Hvit hest
+		// White knight
 		ImageView imgViewWKnight = new ImageView();
 		Image imageWKnight = new Image(brukerapp.class.getResourceAsStream(White_Knight));
 		imgViewWKnight.setImage(imageWKnight);
@@ -275,7 +256,7 @@ public class brukerapp extends Application {
 		imgViewWKnight.setFitWidth(windowSize/11);
 		squares[7][1].setGraphic(imgViewWKnight);
 		
-		// Hvit hest 2
+		// White knight 2
 		ImageView imgViewWKnight2 = new ImageView();
 		Image imageWKnight2 = new Image(brukerapp.class.getResourceAsStream(White_Knight));
 		imgViewWKnight2.setImage(imageWKnight2);
@@ -283,7 +264,7 @@ public class brukerapp extends Application {
 		imgViewWKnight2.setFitWidth(windowSize/11);
 		squares[7][6].setGraphic(imgViewWKnight2);
 		
-		// Hvit lï¿½per
+		// White bishop
 		ImageView imgViewWBishop = new ImageView();
 		Image imageWBishop = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop.setImage(imageWBishop);
@@ -291,7 +272,7 @@ public class brukerapp extends Application {
 		imgViewWBishop.setFitWidth(windowSize/11);
 		squares[7][2].setGraphic(imgViewWBishop);
 		
-		// Hvit lï¿½per 2
+		// White bishop 2
 		ImageView imgViewWBishop2 = new ImageView();
 		Image imageWBishop2 = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop2.setImage(imageWBishop2);
@@ -299,7 +280,7 @@ public class brukerapp extends Application {
 		imgViewWBishop2.setFitWidth(windowSize/11);
 		squares[7][5].setGraphic(imgViewWBishop2);
 		
-		// Hvit dronning
+		// White queen
 		ImageView imgViewWQueen = new ImageView();
 		Image imageWQueen = new Image(brukerapp.class.getResourceAsStream(White_Queen));
 		imgViewWQueen.setImage(imageWQueen);
@@ -307,7 +288,7 @@ public class brukerapp extends Application {
 		imgViewWQueen.setFitWidth(windowSize/11);
 		squares[7][3].setGraphic(imgViewWQueen);
 		
-		// Hvit konge
+		// White king
 		ImageView imgViewWKing = new ImageView();
 		Image imageWKing = new Image(brukerapp.class.getResourceAsStream(White_King));
 		imgViewWKing.setImage(imageWKing);
@@ -322,6 +303,7 @@ public class brukerapp extends Application {
 			imgViewWPawn.setFitHeight(windowSize/11);
 			imgViewWPawn.setFitWidth(windowSize/11);
 			squares[6][i].setGraphic(imgViewWPawn);
+		
 		}
 		
 		
@@ -331,6 +313,8 @@ public class brukerapp extends Application {
 	
 		
 	}
+	
+	
 
 	void scoreBoard() {
 		Stage subStage = new Stage();
