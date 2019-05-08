@@ -23,7 +23,7 @@ public class Deltaker implements Serializable{
 
     @Override
     public String toString() {
-        return "Deltaker{" + ", name=" + name + '}';
+        return  name;
     }
     
     
