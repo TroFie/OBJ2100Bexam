@@ -80,22 +80,22 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button søkPartier = new Button("Søk etter parti");
-		søkPartier.setMinWidth(100);
-		søkPartier.setMaxWidth(150);
+		Button finnPartier = new Button("Søk etter parti");
+		finnPartier.setMinWidth(100);
+		finnPartier.setMaxWidth(150);
 
 		Button visBrett = new Button("Åpne brettet");
 		visBrett.setMinWidth(100);
 		visBrett.setMaxWidth(150);
 
-		meny.getChildren().addAll(openScore, søkPartier, visBrett);
+		meny.getChildren().addAll(openScore, finnPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
 			scoreBoard();
 
 		});
 
-		søkPartier.setOnMouseClicked(e -> {
+		finnPartier.setOnMouseClicked(e -> {
 			try {
 				searchParti();
 			} catch (Exception e1) {
