@@ -207,7 +207,7 @@ public class brukerapp extends Application {
 		final Label label = new Label("Parti-liste");
 		label.setFont(new Font("Arial", 19));
 
-		Collection<SpillerData> list = Files.readAllLines(new File("test.txt").toPath()).stream().map(line -> {
+		Collection<SpillerData> list = Files.readAllLines(new File("resultat.dat").toPath()).stream().map(line -> {
 			String[] details = line.split("-|\\  |\\Dato:");
 			SpillerData cd = new SpillerData();
 			cd.setNavn(details[0]);
