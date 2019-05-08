@@ -1,3 +1,4 @@
+
 import java.awt.TextArea;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +17,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -37,6 +37,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
@@ -44,6 +45,8 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class brukerapp extends Application {
 
@@ -76,22 +79,22 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button sï¿½kPartier = new Button("Sï¿½k etter parti");
-		sï¿½kPartier.setMinWidth(100);
-		sï¿½kPartier.setMaxWidth(150);
+		Button søkPartier = new Button("Søk etter parti");
+		søkPartier.setMinWidth(100);
+		søkPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("ï¿½pne brettet");
-		sï¿½kPartier.setMinWidth(100);
-		sï¿½kPartier.setMaxWidth(150);
+		Button visBrett = new Button("Åpne brettet");
+		søkPartier.setMinWidth(100);
+		søkPartier.setMaxWidth(150);
 
-		meny.getChildren().addAll(openScore, sï¿½kPartier, visBrett);
+		meny.getChildren().addAll(openScore, søkPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
 			scoreBoard();
 
 		});
 
-		sï¿½kPartier.setOnMouseClicked(e -> {
+		søkPartier.setOnMouseClicked(e -> {
 			try {
 				searchParti();
 			} catch (Exception e1) {
@@ -105,7 +108,7 @@ public class brukerapp extends Application {
 		});
 
 	}
-
+/*
 	void visBrett() {
 
 		int WIDTH = 80;
@@ -133,55 +136,52 @@ public class brukerapp extends Application {
 
 		subStage.show();
 	}
-*/
+	*/
+	
 	void visBrett() {
 		
-		String S_Tï¿½rn = "ikoner\\S_Tï¿½rn.png";
-	    String S_Hest = "ikoner\\S_Hest.png";
-	    String S_Lï¿½per = "ikoner\\S_Lï¿½per.png";
-	    String S_Dronning = "ikoner\\S_Dronning.png";
-	    String S_Konge = "ikoner\\S_Konge.png";
-	    String S_Bonde = "ikoner\\S_Bonde.png";
-	    //black pieces
-	    String H_Tï¿½rn = "ikoner\\H_Tï¿½rn.png";
-	    String H_Hest = "ikoner\\H_Hest.png";
-	    String H_Lï¿½per = "ikoner\\H_Lï¿½per.png";
-	    String H_Dronning = "ikoner\\H_Dronning.png";
-	    String H_Konge = "ikoner\\H_Konge.png";
-	    String H_Bonde = "ikoner\\H_Bonde.png";
-	    
-	    Button[][] tiles;
-	    int Size;
-	
-		Stage subStage = new Stage();
-		GridPane root = new GridPane();
-        final int stï¿½rrelse = 8 ;
-        
-        for (int rad = 0; rad < stï¿½rrelse; rad++) {
-            for (int kol = 0; kol < stï¿½rrelse; kol ++) {
-                StackPane square = new StackPane();
-                String color ;
-                if ((rad + kol) % 2 == 0) {
-                    color = "beige";
-                } else {
-                    color = "tan";
-                }
-                square.setStyle("-fx-background-color: "+color+";");
-                root.add(square, kol, rad);
-            }
-        }
-        
-        for (int i = 0; i < stï¿½rrelse; i++) {
-            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
-        }
-        
-        subStage.setScene(new Scene(root, 400, 400));
+		String Black_Rook = "ikoner\\Black_Rook.png"; 
+	    String Black_Knight = "ikoner\\Black_Knight.png"; 
+	    String Black_Bishop = "ikoner\\Black_Bishop.png"; 
+	    String Black_Queen = "ikoner\\Black_Queen.png"; 
+	    String Black_King = "ikoner\\Black_King.png"; 
+	    String Black_Pawn = "ikoner\\Black_Pawn.png"; 
+	    //black pieces 
+	    String White_Rook = "ikoner\\White_Rook.png"; 
+	    String White_Knight = "ikoner\\White_Knight.png"; 
+	    String White_Bishop = "ikoner\\White_Bishop.png"; 
+	    String White_Queen = "ikoner\\White_Queen.png"; 
+	    String White_King = "ikoner\\White_King.png"; 
+	    String White_Pawn = "ikoner\\White_Pawn.png"; 
+
+		Stage subStage = new Stage(); 
+		GridPane root = new GridPane(); 
+		final int size = 8;
+		
+		for (int rad = 0; rad < size; rad++) { 
+            for (int kol = 0; kol < size; kol ++) { 
+                StackPane square = new StackPane(); 
+                String color ; 
+                if ((rad + kol) % 2 == 0) { 
+                    color = "beige"; 
+                } else { 
+                    color = "tan"; 
+                } 
+                square.setStyle("-fx-background-color: "+color+";"); 
+                root.add(square, kol, rad); 
+            } 
+        } 
+		
+		for (int i = 0; i < size; i++) { 
+            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true)); 
+            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true)); 
+        } 
+
+		subStage.setScene(new Scene(root, 500, 500)); 
 		subStage.show();
-            
 	}
 	
-	
+
 	void scoreBoard() {
 		Stage subStage = new Stage();
 		subStage.setTitle("Scorboard");
@@ -196,7 +196,7 @@ public class brukerapp extends Application {
 		subStage.show();
 	}
 
-	Button sï¿½k;
+	Button søk;
 
 	void searchParti() throws Exception {
 		Stage subStage = new Stage();
@@ -207,7 +207,7 @@ public class brukerapp extends Application {
 		final Label label = new Label("Parti-liste");
 		label.setFont(new Font("Arial", 19));
 
-		Collection<SpillerData> list = Files.readAllLines(new File("resultat.dat").toPath()).stream().map(line -> {
+		Collection<SpillerData> list = Files.readAllLines(new File("test.txt").toPath()).stream().map(line -> {
 			String[] details = line.split("-|\\  |\\Dato:");
 			SpillerData cd = new SpillerData();
 			cd.setNavn(details[0]);
@@ -243,10 +243,10 @@ public class brukerapp extends Application {
 		
 		
 		/*
-		  // Legger til sï¿½ke funksjonen ChoiceBox<String> choiceBox = new ChoiceBox();
+		  // Legger til søke funksjonen ChoiceBox<String> choiceBox = new ChoiceBox();
 		  choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
 		  
-		  TextField textField = new TextField(); textField.setPromptText("Sï¿½k her");
+		  TextField textField = new TextField(); textField.setPromptText("Søk her");
 		  textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
 		  "Navn": // flPerson.setPredicate(p -> //
 		  p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
