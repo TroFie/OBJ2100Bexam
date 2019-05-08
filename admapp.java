@@ -362,6 +362,7 @@ public class admapp extends Application{
 	    TextField datoFelt = new TextField();
 	    TextField trekkFelt = new TextField();
 	    TextField resultatFelt = new TextField();
+	    TextField statusFelt = new TextField();
 	    
 	    MenuButton meny = new MenuButton("Parti");
 	    MenuButton resultatMeny = new MenuButton("Resultat");
@@ -370,6 +371,7 @@ public class admapp extends Application{
 	    Text deltakerNavn2 = new Text("Navn på deltaker 2 (Sort)");
 	    Text datoTxt = new Text("Dato");
 	    Text trekkTxt = new Text("Fyll inn trekk");
+	    Text statusTxt = new Text("Status");
 	    
 	    Button byttPlass = new Button("Bytt plass");
 	    Button regTrekk = new Button("Registrer trekk");
@@ -396,11 +398,12 @@ public class admapp extends Application{
 	    navnFelt2.setEditable(false);
 	    datoFelt.setEditable(false);
 	    resultatFelt.setEditable(false);
+	    statusFelt.setEditable(false);
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(10,10,10,10));
 	    layout.getChildren().addAll(meny, deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2,  byttPlass, datoTxt, datoFelt,
-	    		trekkTxt, trekkFelt, regTrekk, resultatMeny, resultatFelt, lagreResultat, seResultatListe, avbryt);
+	    		trekkTxt, trekkFelt, regTrekk, resultatMeny, resultatFelt, lagreResultat, seResultatListe, avbryt,statusTxt, statusFelt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
@@ -446,6 +449,8 @@ public class admapp extends Application{
 	    	if(trekkFelt.getText().isEmpty() == false) {
 	    		trekkListe.add(new Trekk(trekkFelt.getText()));
 	    		trekkFelt.setText("");
+	    	}else {
+	    		statusFelt.setText("Fyll inn trekk..");
 	    	}
 	    });
 	    
@@ -487,7 +492,16 @@ public class admapp extends Application{
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
+				navnFelt1.setText("");
+				navnFelt2.setText("");
+				datoFelt.setText("");
+				resultatFelt.setText("");
+				statusFelt.setText("Resultat lagret..");
+			
+	    	}else {
+	    		statusFelt.setText("Fyll ut nødvendige felt..");
 	    	}
+	    	
 	    });
 
 	    avbryt.setOnMouseClicked(e -> {
