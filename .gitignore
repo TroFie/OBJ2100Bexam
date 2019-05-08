@@ -6,7 +6,6 @@
 /RemiSøkningsListe$Person.class
 /RemiSøkningsListe.class
 /ChessGUI.class
-<<<<<<< Updated upstream
 /brukerappTest.class
 /brukerappMeny.class
 /brukerapp$LinjeHandlerClass.class
@@ -14,6 +13,4 @@
 /brukerapp$RektangelHandlerClass.class
 /brukerapp$SirkelHandlerClass.class
 /brukerapp$TekstHandlerClass.class
-=======
 /Trekk.class
->>>>>>> Stashed changes
