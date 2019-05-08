@@ -26,6 +26,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -157,10 +159,14 @@ public class brukerapp extends Application {
 		Stage subStage = new Stage(); 
 		GridPane root = new GridPane(); 
 		final int size = 8;
+		final int windowSize = 500;
+		
+		Button[][] squares = new Button[size][size];
 		
 		for (int rad = 0; rad < size; rad++) { 
             for (int kol = 0; kol < size; kol ++) { 
-                StackPane square = new StackPane(); 
+            	Button square = new Button();
+            	square.setPrefSize(windowSize/size, windowSize/size);
                 String color ; 
                 if ((rad + kol) % 2 == 0) { 
                     color = "beige"; 
@@ -169,6 +175,7 @@ public class brukerapp extends Application {
                 } 
                 square.setStyle("-fx-background-color: "+color+";"); 
                 root.add(square, kol, rad); 
+                squares[rad][kol] = square;
             } 
         } 
 		
@@ -176,9 +183,160 @@ public class brukerapp extends Application {
             root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true)); 
             root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true)); 
         } 
-
-		subStage.setScene(new Scene(root, 500, 500)); 
+		// Svarte brikker
+		// Svart tårn
+		ImageView imgViewBRook = new ImageView();
+		Image imageBRook = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		imgViewBRook.setImage(imageBRook);
+		imgViewBRook.setFitHeight(windowSize/11);
+		imgViewBRook.setFitWidth(windowSize/11);
+		squares[0][0].setGraphic(imgViewBRook);
+		
+		// Svart tårn 2
+		ImageView imgViewBRook2 = new ImageView();
+		Image imageBRook2 = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		imgViewBRook2.setImage(imageBRook2);
+		imgViewBRook2.setFitHeight(windowSize/11);
+		imgViewBRook2.setFitWidth(windowSize/11);
+		squares[0][7].setGraphic(imgViewBRook2);
+		
+		// Svart hest
+		ImageView imgViewBKnight = new ImageView();
+		Image imageBKnight = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		imgViewBKnight.setImage(imageBKnight);
+		imgViewBKnight.setFitHeight(windowSize/11);
+		imgViewBKnight.setFitWidth(windowSize/11);
+		squares[0][1].setGraphic(imgViewBKnight);
+		
+		// Svart hest 2
+		ImageView imgViewBKnight2 = new ImageView();
+		Image imageBKnight2 = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		imgViewBKnight2.setImage(imageBKnight2);
+		imgViewBKnight2.setFitHeight(windowSize/11);
+		imgViewBKnight2.setFitWidth(windowSize/11);
+		squares[0][6].setGraphic(imgViewBKnight2);
+		
+		// Svart løper
+		ImageView imgViewBBishop = new ImageView();
+		Image imageBBishop = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		imgViewBBishop.setImage(imageBBishop);
+		imgViewBBishop.setFitHeight(windowSize/11);
+		imgViewBBishop.setFitWidth(windowSize/11);
+		squares[0][2].setGraphic(imgViewBBishop);
+		
+		// Svart løper 2
+		ImageView imgViewBBishop2 = new ImageView();
+		Image imageBBishop2 = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		imgViewBBishop2.setImage(imageBBishop2);
+		imgViewBBishop2.setFitHeight(windowSize/11);
+		imgViewBBishop2.setFitWidth(windowSize/11);
+		squares[0][5].setGraphic(imgViewBBishop2);
+		
+		// Svart dronning
+		ImageView imgViewBQueen = new ImageView();
+		Image imageBQueen = new Image(brukerapp.class.getResourceAsStream(Black_Queen));
+		imgViewBQueen.setImage(imageBQueen);
+		imgViewBQueen.setFitHeight(windowSize/11);
+		imgViewBQueen.setFitWidth(windowSize/11);
+		squares[0][3].setGraphic(imgViewBQueen);
+		
+		// Svart konge
+		ImageView imgViewBKing = new ImageView();
+		Image imageBKing = new Image(brukerapp.class.getResourceAsStream(Black_King));
+		imgViewBKing.setImage(imageBKing);
+		imgViewBKing.setFitHeight(windowSize/11);
+		imgViewBKing.setFitWidth(windowSize/11);
+		squares[0][4].setGraphic(imgViewBKing);
+		
+		for(int i = 0; i < 8; i++) {
+			ImageView imgViewBPawn = new ImageView();
+			Image imageBPawn = new Image(brukerapp.class.getResourceAsStream(Black_Pawn));
+			imgViewBPawn.setImage(imageBPawn);
+			imgViewBPawn.setFitHeight(windowSize/11);
+			imgViewBPawn.setFitWidth(windowSize/11);
+			squares[1][i].setGraphic(imgViewBPawn);
+		}
+		
+		// Hvite brikker
+		// Hvitt tårn
+		ImageView imgViewWRook = new ImageView();
+		Image imageWRook = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		imgViewWRook.setImage(imageWRook);
+		imgViewWRook.setFitHeight(windowSize/11);
+		imgViewWRook.setFitWidth(windowSize/11);
+		squares[7][0].setGraphic(imgViewWRook);
+		
+		// Hvitt tårn 2
+		ImageView imgViewWRook2 = new ImageView();
+		Image imageWRook2 = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		imgViewWRook2.setImage(imageWRook2);
+		imgViewWRook2.setFitHeight(windowSize/11);
+		imgViewWRook2.setFitWidth(windowSize/11);
+		squares[7][7].setGraphic(imgViewWRook2);
+		
+		// Hvit hest
+		ImageView imgViewWKnight = new ImageView();
+		Image imageWKnight = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		imgViewWKnight.setImage(imageWKnight);
+		imgViewWKnight.setFitHeight(windowSize/11);
+		imgViewWKnight.setFitWidth(windowSize/11);
+		squares[7][1].setGraphic(imgViewWKnight);
+		
+		// Hvit hest 2
+		ImageView imgViewWKnight2 = new ImageView();
+		Image imageWKnight2 = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		imgViewWKnight2.setImage(imageWKnight2);
+		imgViewWKnight2.setFitHeight(windowSize/11);
+		imgViewWKnight2.setFitWidth(windowSize/11);
+		squares[7][6].setGraphic(imgViewWKnight2);
+		
+		// Hvit løper
+		ImageView imgViewWBishop = new ImageView();
+		Image imageWBishop = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		imgViewWBishop.setImage(imageWBishop);
+		imgViewWBishop.setFitHeight(windowSize/11);
+		imgViewWBishop.setFitWidth(windowSize/11);
+		squares[7][2].setGraphic(imgViewWBishop);
+		
+		// Hvit løper 2
+		ImageView imgViewWBishop2 = new ImageView();
+		Image imageWBishop2 = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		imgViewWBishop2.setImage(imageWBishop2);
+		imgViewWBishop2.setFitHeight(windowSize/11);
+		imgViewWBishop2.setFitWidth(windowSize/11);
+		squares[7][5].setGraphic(imgViewWBishop2);
+		
+		// Hvit dronning
+		ImageView imgViewWQueen = new ImageView();
+		Image imageWQueen = new Image(brukerapp.class.getResourceAsStream(White_Queen));
+		imgViewWQueen.setImage(imageWQueen);
+		imgViewWQueen.setFitHeight(windowSize/11);
+		imgViewWQueen.setFitWidth(windowSize/11);
+		squares[7][3].setGraphic(imgViewWQueen);
+		
+		// Hvit konge
+		ImageView imgViewWKing = new ImageView();
+		Image imageWKing = new Image(brukerapp.class.getResourceAsStream(White_King));
+		imgViewWKing.setImage(imageWKing);
+		imgViewWKing.setFitHeight(windowSize/11);
+		imgViewWKing.setFitWidth(windowSize/11);
+		squares[7][4].setGraphic(imgViewWKing);
+		
+		for(int i = 0; i < 8; i++) {
+			ImageView imgViewWPawn = new ImageView();
+			Image imageWPawn = new Image(brukerapp.class.getResourceAsStream(White_Pawn));
+			imgViewWPawn.setImage(imageWPawn);
+			imgViewWPawn.setFitHeight(windowSize/11);
+			imgViewWPawn.setFitWidth(windowSize/11);
+			squares[6][i].setGraphic(imgViewWPawn);
+		}
+		
+		
+		subStage.setScene(new Scene(root, windowSize, windowSize)); 
 		subStage.show();
+		subStage.setResizable(false);
+	
+		
 	}
 	
 
