@@ -10,11 +10,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -27,6 +29,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -94,7 +97,7 @@ public class admapp extends Application{
             ex.printStackTrace();
         }
         // Fyller opp partiListe med eksisterende partier
-        File partiFile = new File("partier.txt");
+        File partiFile = new File("partier.dat");
         try {
             FileInputStream fis = new FileInputStream(partiFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -253,8 +256,8 @@ public class admapp extends Application{
 	  
 	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
 	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
-	    Text dato 		   = new Text("Dato og tid");
-	    
+	    Text dato 		   = new Text("Dato og tid. Form(29.04.19 21:30)");
+
 	    Button lagreParti = new Button("Lagre sjakkparti");
 	    lagreParti.setMinWidth(100);
 	    lagreParti.setMaxWidth(150);
@@ -279,7 +282,7 @@ public class admapp extends Application{
 	    lagreParti.setOnMouseClicked(e -> {
 	    	partiListe.add(new Parti(navnFelt1.getText(), navnFelt2.getText(), datoTid.getText()));
 
-	    	File file = new File("partier.txt");
+	    	File file = new File("partier.dat");
 	    	try {
 	    		FileOutputStream fos = new FileOutputStream(file);
 	    		ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -471,8 +474,8 @@ public class admapp extends Application{
 	    		    BufferedWriter bw = new BufferedWriter(fw);
 	    		    PrintWriter out = new PrintWriter(bw))
 	    		{
-	    		    out.print(navnFelt1.getText() + ", ");
-	    		    out.print(navnFelt2.getText() + ", ");
+	    		    out.print(navnFelt1.getText() + ",");
+	    		    out.print(navnFelt2.getText() + ",");
 	    		    out.print(datoFelt.getText() + "\n");
 	    		} catch (IOException ez) {
 	    		}
