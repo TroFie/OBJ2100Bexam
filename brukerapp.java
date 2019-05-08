@@ -16,7 +16,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -26,6 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,6 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
@@ -44,6 +46,8 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class brukerapp extends Application {
 
@@ -76,22 +80,22 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button s�kPartier = new Button("S�k etter parti");
-		s�kPartier.setMinWidth(100);
-		s�kPartier.setMaxWidth(150);
+		Button finnPartier = new Button("S�k etter parti");
+		finnPartier.setMinWidth(100);
+		finnPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("�pne brettet");
-		s�kPartier.setMinWidth(100);
-		s�kPartier.setMaxWidth(150);
+		Button visBrett = new Button("�pne brettet");
+		visBrett.setMinWidth(100);
+		visBrett.setMaxWidth(150);
 
-		meny.getChildren().addAll(openScore, s�kPartier, visBrett);
+		meny.getChildren().addAll(openScore, finnPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
 			scoreBoard();
 
 		});
 
-		s�kPartier.setOnMouseClicked(e -> {
+		finnPartier.setOnMouseClicked(e -> {
 			try {
 				searchParti();
 			} catch (Exception e1) {
@@ -105,83 +109,215 @@ public class brukerapp extends Application {
 		});
 
 	}
+	/*
+	 * void visBrett() { int WIDTH = 80; int HEIGHT = 80; int BOARD_SIZE = 640;
+	 * Stage subStage = new Stage(); Group root = new Group(); Scene scene = new
+	 * Scene(root, BOARD_SIZE, BOARD_SIZE); subStage.setScene(scene); for (int x =
+	 * 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) { for (int y = 0; y <
+	 * BOARD_SIZE; y = y + HEIGHT) { if (c % 2 == 0) { Rectangle r = new
+	 * Rectangle(); r.setX(x); r.setY(y); r.setWidth(WIDTH); r.setHeight(HEIGHT);
+	 * root.getChildren().add(r); } c++; } } subStage.show(); }
+	 */
 
 	void visBrett() {
 
-		int WIDTH = 80;
-		int HEIGHT = 80;
-		int BOARD_SIZE = 640;
+		String Black_Rook = "ikoner\\Black_Rook.png";
+		String Black_Knight = "ikoner\\Black_Knight.png";
+		String Black_Bishop = "ikoner\\Black_Bishop.png";
+		String Black_Queen = "ikoner\\Black_Queen.png";
+		String Black_King = "ikoner\\Black_King.png";
+		String Black_Pawn = "ikoner\\Black_Pawn.png";
+		// black pieces
+		String White_Rook = "ikoner\\White_Rook.png";
+		String White_Knight = "ikoner\\White_Knight.png";
+		String White_Bishop = "ikoner\\White_Bishop.png";
+		String White_Queen = "ikoner\\White_Queen.png";
+		String White_King = "ikoner\\White_King.png";
+		String White_Pawn = "ikoner\\White_Pawn.png";
 
-		Stage subStage = new Stage();
-		Group root = new Group();
-		Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
-		subStage.setScene(scene);
-		for (int x = 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) {
-			for (int y = 0; y < BOARD_SIZE; y = y + HEIGHT) {
-				if (c % 2 == 0) {
-					Rectangle r = new Rectangle();
-					r.setX(x);
-					r.setY(y);
-					r.setWidth(WIDTH);
-					r.setHeight(HEIGHT);
-
-					root.getChildren().add(r);
-				}
-				c++;
-			}
-		}
-
-		subStage.show();
-	}
-*/
-	void visBrett() {
+		Stage subStage = new Stage(); 
+		GridPane root = new GridPane(); 
+		final int size = 8;
+		final int windowSize = 500;
 		
-		String S_T�rn = "ikoner\\S_T�rn.png";
-	    String S_Hest = "ikoner\\S_Hest.png";
-	    String S_L�per = "ikoner\\S_L�per.png";
-	    String S_Dronning = "ikoner\\S_Dronning.png";
-	    String S_Konge = "ikoner\\S_Konge.png";
-	    String S_Bonde = "ikoner\\S_Bonde.png";
-	    //black pieces
-	    String H_T�rn = "ikoner\\H_T�rn.png";
-	    String H_Hest = "ikoner\\H_Hest.png";
-	    String H_L�per = "ikoner\\H_L�per.png";
-	    String H_Dronning = "ikoner\\H_Dronning.png";
-	    String H_Konge = "ikoner\\H_Konge.png";
-	    String H_Bonde = "ikoner\\H_Bonde.png";
-	    
-	    Button[][] tiles;
-	    int Size;
-	
-		Stage subStage = new Stage();
-		GridPane root = new GridPane();
-        final int st�rrelse = 8 ;
-        
-        for (int rad = 0; rad < st�rrelse; rad++) {
-            for (int kol = 0; kol < st�rrelse; kol ++) {
-                StackPane square = new StackPane();
-                String color ;
-                if ((rad + kol) % 2 == 0) {
-                    color = "beige";
-                } else {
-                    color = "tan";
-                }
-                square.setStyle("-fx-background-color: "+color+";");
-                root.add(square, kol, rad);
-            }
-        }
-        
-        for (int i = 0; i < st�rrelse; i++) {
-            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
-        }
-        
-        subStage.setScene(new Scene(root, 400, 400));
+		Button[][] squares = new Button[size][size];
+		
+		for (int rad = 0; rad < size; rad++) { 
+            for (int kol = 0; kol < size; kol ++) { 
+            	Button square = new Button();
+            	square.setPrefSize(windowSize/size, windowSize/size);
+                String color ; 
+                if ((rad + kol) % 2 == 0) { 
+                    color = "beige"; 
+                } else { 
+                    color = "tan"; 
+                } 
+                square.setStyle("-fx-background-color: "+color+";"); 
+                root.add(square, kol, rad); 
+                squares[rad][kol] = square;
+            } 
+        } 
+		
+		for (int i = 0; i < size; i++) { 
+            root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true)); 
+            root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true)); 
+        } 
+		// Svarte brikker
+		// Svart t�rn
+		ImageView imgViewBRook = new ImageView();
+		Image imageBRook = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		imgViewBRook.setImage(imageBRook);
+		imgViewBRook.setFitHeight(windowSize/11);
+		imgViewBRook.setFitWidth(windowSize/11);
+		squares[0][0].setGraphic(imgViewBRook);
+		
+		// Svart t�rn 2
+		ImageView imgViewBRook2 = new ImageView();
+		Image imageBRook2 = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		imgViewBRook2.setImage(imageBRook2);
+		imgViewBRook2.setFitHeight(windowSize/11);
+		imgViewBRook2.setFitWidth(windowSize/11);
+		squares[0][7].setGraphic(imgViewBRook2);
+		
+		// Svart hest
+		ImageView imgViewBKnight = new ImageView();
+		Image imageBKnight = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		imgViewBKnight.setImage(imageBKnight);
+		imgViewBKnight.setFitHeight(windowSize/11);
+		imgViewBKnight.setFitWidth(windowSize/11);
+		squares[0][1].setGraphic(imgViewBKnight);
+		
+		// Svart hest 2
+		ImageView imgViewBKnight2 = new ImageView();
+		Image imageBKnight2 = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		imgViewBKnight2.setImage(imageBKnight2);
+		imgViewBKnight2.setFitHeight(windowSize/11);
+		imgViewBKnight2.setFitWidth(windowSize/11);
+		squares[0][6].setGraphic(imgViewBKnight2);
+		
+		// Svart l�per
+		ImageView imgViewBBishop = new ImageView();
+		Image imageBBishop = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		imgViewBBishop.setImage(imageBBishop);
+		imgViewBBishop.setFitHeight(windowSize/11);
+		imgViewBBishop.setFitWidth(windowSize/11);
+		squares[0][2].setGraphic(imgViewBBishop);
+		
+		// Svart l�per 2
+		ImageView imgViewBBishop2 = new ImageView();
+		Image imageBBishop2 = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		imgViewBBishop2.setImage(imageBBishop2);
+		imgViewBBishop2.setFitHeight(windowSize/11);
+		imgViewBBishop2.setFitWidth(windowSize/11);
+		squares[0][5].setGraphic(imgViewBBishop2);
+		
+		// Svart dronning
+		ImageView imgViewBQueen = new ImageView();
+		Image imageBQueen = new Image(brukerapp.class.getResourceAsStream(Black_Queen));
+		imgViewBQueen.setImage(imageBQueen);
+		imgViewBQueen.setFitHeight(windowSize/11);
+		imgViewBQueen.setFitWidth(windowSize/11);
+		squares[0][3].setGraphic(imgViewBQueen);
+		
+		// Svart konge
+		ImageView imgViewBKing = new ImageView();
+		Image imageBKing = new Image(brukerapp.class.getResourceAsStream(Black_King));
+		imgViewBKing.setImage(imageBKing);
+		imgViewBKing.setFitHeight(windowSize/11);
+		imgViewBKing.setFitWidth(windowSize/11);
+		squares[0][4].setGraphic(imgViewBKing);
+		
+		for(int i = 0; i < 8; i++) {
+			ImageView imgViewBPawn = new ImageView();
+			Image imageBPawn = new Image(brukerapp.class.getResourceAsStream(Black_Pawn));
+			imgViewBPawn.setImage(imageBPawn);
+			imgViewBPawn.setFitHeight(windowSize/11);
+			imgViewBPawn.setFitWidth(windowSize/11);
+			squares[1][i].setGraphic(imgViewBPawn);
+		}
+		
+		// Hvite brikker
+		// Hvitt t�rn
+		ImageView imgViewWRook = new ImageView();
+		Image imageWRook = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		imgViewWRook.setImage(imageWRook);
+		imgViewWRook.setFitHeight(windowSize/11);
+		imgViewWRook.setFitWidth(windowSize/11);
+		squares[7][0].setGraphic(imgViewWRook);
+		
+		// Hvitt t�rn 2
+		ImageView imgViewWRook2 = new ImageView();
+		Image imageWRook2 = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		imgViewWRook2.setImage(imageWRook2);
+		imgViewWRook2.setFitHeight(windowSize/11);
+		imgViewWRook2.setFitWidth(windowSize/11);
+		squares[7][7].setGraphic(imgViewWRook2);
+		
+		// Hvit hest
+		ImageView imgViewWKnight = new ImageView();
+		Image imageWKnight = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		imgViewWKnight.setImage(imageWKnight);
+		imgViewWKnight.setFitHeight(windowSize/11);
+		imgViewWKnight.setFitWidth(windowSize/11);
+		squares[7][1].setGraphic(imgViewWKnight);
+		
+		// Hvit hest 2
+		ImageView imgViewWKnight2 = new ImageView();
+		Image imageWKnight2 = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		imgViewWKnight2.setImage(imageWKnight2);
+		imgViewWKnight2.setFitHeight(windowSize/11);
+		imgViewWKnight2.setFitWidth(windowSize/11);
+		squares[7][6].setGraphic(imgViewWKnight2);
+		
+		// Hvit l�per
+		ImageView imgViewWBishop = new ImageView();
+		Image imageWBishop = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		imgViewWBishop.setImage(imageWBishop);
+		imgViewWBishop.setFitHeight(windowSize/11);
+		imgViewWBishop.setFitWidth(windowSize/11);
+		squares[7][2].setGraphic(imgViewWBishop);
+		
+		// Hvit l�per 2
+		ImageView imgViewWBishop2 = new ImageView();
+		Image imageWBishop2 = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		imgViewWBishop2.setImage(imageWBishop2);
+		imgViewWBishop2.setFitHeight(windowSize/11);
+		imgViewWBishop2.setFitWidth(windowSize/11);
+		squares[7][5].setGraphic(imgViewWBishop2);
+		
+		// Hvit dronning
+		ImageView imgViewWQueen = new ImageView();
+		Image imageWQueen = new Image(brukerapp.class.getResourceAsStream(White_Queen));
+		imgViewWQueen.setImage(imageWQueen);
+		imgViewWQueen.setFitHeight(windowSize/11);
+		imgViewWQueen.setFitWidth(windowSize/11);
+		squares[7][3].setGraphic(imgViewWQueen);
+		
+		// Hvit konge
+		ImageView imgViewWKing = new ImageView();
+		Image imageWKing = new Image(brukerapp.class.getResourceAsStream(White_King));
+		imgViewWKing.setImage(imageWKing);
+		imgViewWKing.setFitHeight(windowSize/11);
+		imgViewWKing.setFitWidth(windowSize/11);
+		squares[7][4].setGraphic(imgViewWKing);
+		
+		for(int i = 0; i < 8; i++) {
+			ImageView imgViewWPawn = new ImageView();
+			Image imageWPawn = new Image(brukerapp.class.getResourceAsStream(White_Pawn));
+			imgViewWPawn.setImage(imageWPawn);
+			imgViewWPawn.setFitHeight(windowSize/11);
+			imgViewWPawn.setFitWidth(windowSize/11);
+			squares[6][i].setGraphic(imgViewWPawn);
+		}
+		
+		
+		subStage.setScene(new Scene(root, windowSize, windowSize)); 
 		subStage.show();
-            
+		subStage.setResizable(false);
+	
+		
 	}
-	
-	
+
 	void scoreBoard() {
 		Stage subStage = new Stage();
 		subStage.setTitle("Scorboard");
@@ -196,18 +332,19 @@ public class brukerapp extends Application {
 		subStage.show();
 	}
 
-	Button s�k;
+
 
 	void searchParti() throws Exception {
 		Stage subStage = new Stage();
+		Scene scene = new Scene(new Group());
 		subStage.setTitle("Parti-liste");
 		subStage.setWidth(400);
 		subStage.setHeight(550);
-		
+
 		final Label label = new Label("Parti-liste");
 		label.setFont(new Font("Arial", 19));
 
-		Collection<SpillerData> list = Files.readAllLines(new File("resultat.dat").toPath()).stream().map(line -> {
+		Collection<SpillerData> list = Files.readAllLines(new File("test.txt").toPath()).stream().map(line -> {
 			String[] details = line.split("-|\\  |\\Dato:");
 			SpillerData cd = new SpillerData();
 			cd.setNavn(details[0]);
@@ -228,39 +365,81 @@ public class brukerapp extends Application {
 		navnSpiller2.setMinWidth(100);
 		datoSpiller.setMinWidth(200);
 
+		tableView.setItems(details);
 		tableView.getColumns().addAll(navnSpiller, navnSpiller2, datoSpiller);
 
 		navnSpiller.setCellValueFactory(data -> data.getValue().navnProperty());
 		navnSpiller2.setCellValueFactory(data -> data.getValue().navn2Property());
 		datoSpiller.setCellValueFactory(data -> data.getValue().datoProperty());
-		
+
+		Button velgKnapp = new Button("Se parti");
+		velgKnapp.setOnMouseClicked(e -> {
+			visBrett();
+			// GJØR INGENTING ATM. LEGG TIL FUNKSJON FOR Å ÅPNE KARTET OG SE PÅ TINGEN?
+		});
+	
+		TextField textField = new TextField();
+		textField.setPromptText("Søk her");
+		textField.setOnKeyReleased(keyEvent -> {
+
+			if (textField.textProperty().get().isEmpty()) {
+				tableView.setItems(details);
+				return;
+			}
+
+			ObservableList<SpillerData> tableItems = FXCollections.observableArrayList();
+			ObservableList<TableColumn<SpillerData, ?>> cols = tableView.getColumns();
+			for (int i = 0; i < details.size(); i++) {
+
+				for (int j = 0; j < cols.size(); j++) {
+					TableColumn col = cols.get(j);
+					String cellValue = col.getCellData(details.get(i)).toString();
+					cellValue = cellValue.toLowerCase();
+					if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+						tableItems.add(details.get(i));
+						break;
+					}
+				}
+			}
+			tableView.setItems(tableItems);
+
+		});
+
+		HBox hBox = new HBox(textField, velgKnapp);
+		hBox.setAlignment(Pos.CENTER);
+		final VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(10, 0, 0, 10));
+		vbox.getChildren().addAll(label, tableView, hBox);
+
+		((Group) scene.getRoot()).getChildren().addAll(vbox);
 		tableView.setItems(details);
-		StackPane sp = new StackPane(tableView);
-		Scene scene = new Scene(sp);
 		subStage.setScene(scene);
 		subStage.setResizable(false);
 		subStage.show();
-		
-		
+
 		/*
-		  // Legger til s�ke funksjonen ChoiceBox<String> choiceBox = new ChoiceBox();
-		  choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
-		  
-		  TextField textField = new TextField(); textField.setPromptText("S�k her");
-		  textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
-		  "Navn": // flPerson.setPredicate(p -> //
-		  p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
-		  ; break; case "Resultat": // flPerson.setPredicate(p -> //
-		  p.getNavn1().toLowerCase().contains(textField.getText().toLowerCase().trim())
-		  ); break; } });
-		  
-		  choiceBox.getSelectionModel().selectedItemProperty().addListener((obs,
-		  oldVal, newVal) -> { if (newVal != null) { textField.setText(""); //
-		  flPerson.setPredicate(null); } });
-		*/
-		
-		
-		/*
+		 * ChoiceBox<String> choiceBox = new ChoiceBox();
+		 * choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
+		 * 
+		 * ChoiceBox<String> choiceBox = new ChoiceBox();
+		 * choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
+		 * 
+		 * TextField textField = new TextField(); textField.setPromptText("Søk her");
+		 * textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
+		 * "Navn": // flPerson.setPredicate(p -> // //
+		 * p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
+		 * ; break; case "Resultat": // flPerson.setPredicate(p -> // //
+		 * p.getNavn1().toLowerCase().contains(textField.getText().toLowerCase().trim())
+		 * ); break; } });
+		 * 
+		 * choiceBox.getSelectionModel().selectedItemProperty().addListener((obs,
+		 * oldVal, newVal) -> { if (newVal != null) { textField.setText(""); //
+		 * flPerson.setPredicate(null); } });
+		 * 
+		 * 
+		 * 
+		 * 
 		 * HBox hBox = new HBox(choiceBox, textField); hBox.setAlignment(Pos.CENTER);
 		 * final VBox vbox = new VBox(); vbox.setSpacing(5); vbox.setPadding(new
 		 * Insets(10, 0, 0, 10)); vbox.getChildren().addAll(label, table, hBox);
