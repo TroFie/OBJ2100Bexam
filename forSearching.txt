@@ -1,5 +1,2 @@
-Mathias,Henrik,21.10.2025 04:25
-Trotskij,Lenin,25.11.1932 02:00
-Andreas,Ole,29.04.1992
-Andreas,Ole,29.04.1992
-a,b,29.02.92 21:30
+Andreas,Henrik,01.06.19 13:30
+Per,Olav,20.04.92 21:30

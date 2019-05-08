@@ -452,8 +452,8 @@ public class admapp extends Application{
 	    	deltakerListe3.add(new Deltaker(navnFelt2.getText()));
 	    	datoListe.add(new Date());
 	    	resultatListe.add(new Resultat(resultatFelt.getText()));
-	    	
-	    	File file = new File("resultat" + navnFelt1.getText() + navnFelt2.getText() + datoFelt.getText() +  ".dat");
+	    	// skriver til .dat fil, alle "resultater" får egen fil
+	    	File file = new File("resultat" + navnFelt1.getText() + navnFelt2.getText() + datoFelt.getText() + ".dat");
 	    	try {
 	    		FileOutputStream fos = new FileOutputStream(file);
 	    		ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -469,7 +469,7 @@ public class admapp extends Application{
 	        } catch (IOException ex) {
 	           ex.printStackTrace();
 	       	}
-			
+			// skriver til fil for søk i spillerapp
 	    	try(FileWriter fw = new FileWriter("forSearching.txt", true);
 	    		    BufferedWriter bw = new BufferedWriter(fw);
 	    		    PrintWriter out = new PrintWriter(bw))
@@ -479,10 +479,7 @@ public class admapp extends Application{
 	    		    out.print(datoFelt.getText() + "\n");
 	    		} catch (IOException ez) {
 	    		}
-	    	
-					
-		
-	    	
+
 			try(
 				ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file))); 
 				) {

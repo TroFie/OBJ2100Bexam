@@ -413,7 +413,7 @@ public class brukerapp extends Application {
 		});
 	
 		TextField textField = new TextField();
-		textField.setPromptText("SÃ¸k her");
+		textField.setPromptText("Søk her");
 		textField.setOnKeyReleased(keyEvent -> {
 
 			if (textField.textProperty().get().isEmpty()) {
