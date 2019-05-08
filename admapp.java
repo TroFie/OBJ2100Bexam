@@ -423,7 +423,7 @@ public class admapp extends Application{
 	    		navnFelt1.setText(navn1);
 	    		navnFelt2.setText(navn2);
 	    		datoFelt.setText(dato);
-	    		resultatFelt.setText(null);
+	    		resultatFelt.setText("");
 	    	});
 	    }
 	    
@@ -440,7 +440,7 @@ public class admapp extends Application{
 	    	String n1 = navnFelt1.getText();
 	    	navnFelt1.setText(navnFelt2.getText());
 	    	navnFelt2.setText(n1);
-	    	resultatFelt.setText(null);
+	    	resultatFelt.setText("");
 	    });
 	    regTrekk.setOnMouseClicked(e->{
 	    	if(trekkFelt.getText().isEmpty() == false) {
@@ -452,7 +452,7 @@ public class admapp extends Application{
 
 	    // Oppretter resultat-filer
 	    lagreResultat.setOnMouseClicked(e -> {
-	    	if(navnFelt1.getText().isEmpty() == false) {
+	    	if(resultatFelt.getText().isEmpty() == false && navnFelt1.getText().isEmpty() == false) {
 	    	trekkListe.add(new Trekk("NAVN (HVIT): "));
 	    	trekkListe.add(new Trekk(navnFelt1.getText()));
 	    	trekkListe.add(new Trekk("NAVN (SORT): "));
