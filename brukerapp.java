@@ -2,10 +2,15 @@
 import java.awt.TextArea;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.Scanner;
-
+import java.util.stream.Collectors;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -20,8 +25,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
+import java.nio.file.Files;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -51,7 +59,6 @@ public class brukerapp extends Application {
 	double remis = 0.5;
 	double tap = 0;
 	private TableView<Parti> table = new TableView<Parti>();
-	
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -63,11 +70,11 @@ public class brukerapp extends Application {
 		Scene scene = new Scene(pane, 850, 750);
 
 		primaryStage.setTitle("Brukerapp");
-		primaryStage.setScene( scene);
+		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
 
-	    // Knapper
+		// Knapper
 		Button openScore = new Button("Vis rangering");
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
@@ -75,12 +82,11 @@ public class brukerapp extends Application {
 		Button søkPartier = new Button("Søk etter parti");
 		søkPartier.setMinWidth(100);
 		søkPartier.setMaxWidth(150);
-		
+
 		Button visBrett = new Button("Åpne brettet");
 		søkPartier.setMinWidth(100);
 		søkPartier.setMaxWidth(150);
 
-	
 		meny.getChildren().addAll(openScore, søkPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
@@ -89,26 +95,26 @@ public class brukerapp extends Application {
 		});
 
 		søkPartier.setOnMouseClicked(e -> {
-			searchParti();
+			try {
+				searchParti();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
-		
-		
-		
+
 		visBrett.setOnMouseClicked(e -> {
 			visBrett();
 		});
-		
-		
+
 	}
-	
-	// Testa litt, funker ikke veldig bra
 
 	void visBrett() {
-		
+
 		int WIDTH = 80;
 		int HEIGHT = 80;
 		int BOARD_SIZE = 640;
-	
+
 		Stage subStage = new Stage();
 		Group root = new Group();
 		Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
@@ -127,7 +133,7 @@ public class brukerapp extends Application {
 				c++;
 			}
 		}
-		
+
 		subStage.show();
 	}
 
@@ -140,69 +146,140 @@ public class brukerapp extends Application {
 		VBox layout = new VBox(10);
 
 		Scene scene = new Scene(layout, 300, 200);
-		
+
 		subStage.setScene(scene);
 		subStage.show();
 	}
 
 	Button søk;
 
-	void searchParti() {
-	Stage stage = new Stage();
-		 Scene scene = new Scene(new Group());
-	        stage.setTitle("Parti-liste");
-	        stage.setWidth(450);
-	        stage.setHeight(550);
+	void searchParti() throws Exception {
+		Stage subStage = new Stage();
+		subStage.setTitle("Parti-liste");
+		subStage.setWidth(400);
+		subStage.setHeight(550);
+		
+		final Label label = new Label("Parti-liste");
+		label.setFont(new Font("Arial", 19));
 
-	        final Label label = new Label("Parti-liste");
-	        label.setFont(new Font("Arial", 19));
-	        
-	        table.setEditable(true);
+		Collection<SpillerData> list = Files.readAllLines(new File("test.txt").toPath()).stream().map(line -> {
+			String[] details = line.split("-|\\  |\\Dato:");
+			SpillerData cd = new SpillerData();
+			cd.setNavn(details[0]);
+			cd.setNavn2(details[1]);
+			cd.setDato(details[2]);
+			// Hvis vi skal ha med resultat cd.setResultat(details[3]);
+			return cd;
+		}).collect(Collectors.toList());
 
-	        TableColumn navnSpiller = new TableColumn("Navn");
-	        navnSpiller.setMinWidth(100);
-	        
-	        TableColumn resultatSpiller = new TableColumn("Resultat");
-	        resultatSpiller.setMinWidth(100);
-	        
-	        TableColumn datoSpiller = new TableColumn("Dato");
-	        datoSpiller.setMinWidth(200);
-	        
-	       //  FilteredList<Parti> flPerson = new FilteredList(data, p -> true);
-	        // table.setItems(flPerson);
-	        table.getColumns().addAll(navnSpiller, resultatSpiller, datoSpiller);
-	        
-	        ChoiceBox<String> choiceBox = new ChoiceBox();
-	        choiceBox.getItems().addAll("Navn", "Resultat");
-	        choiceBox.setValue("Navn");
+		ObservableList<SpillerData> details = FXCollections.observableArrayList(list);
 
-	        TextField textField = new TextField();
-	        textField.setPromptText("Søk her");
-	        textField.setOnKeyReleased(keyEvent ->
-	        {
-	            switch (choiceBox.getValue())
-	            {
-	                case "Navn":
-	               //     flPerson.setPredicate(p -> p.getFirstName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
-	                    break;
-	                case "Resultat":
-	                //    flPerson.setPredicate(p -> p.getLastName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
-	                    break;
-	            }
-	        });
-	        
-	        HBox hBox = new HBox(choiceBox, textField);
-	        hBox.setAlignment(Pos.CENTER);
-	        final VBox vbox = new VBox();
-	        vbox.setSpacing(5);
-	        vbox.setPadding(new Insets(10, 0, 0, 10));
-	        vbox.getChildren().addAll(label, table, hBox);
+		TableView<SpillerData> tableView = new TableView<>();
+		TableColumn<SpillerData, String> navnSpiller = new TableColumn("Navn");
+		TableColumn<SpillerData, String> navnSpiller2 = new TableColumn("Navn2");
+		TableColumn<SpillerData, String> datoSpiller = new TableColumn("Dato");
 
-	        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-	        
-	        
-	        stage.setScene(scene);
-	        stage.show();
+		navnSpiller.setMinWidth(100);
+		navnSpiller2.setMinWidth(100);
+		datoSpiller.setMinWidth(200);
+
+		tableView.getColumns().addAll(navnSpiller, navnSpiller2, datoSpiller);
+
+		navnSpiller.setCellValueFactory(data -> data.getValue().navnProperty());
+		navnSpiller2.setCellValueFactory(data -> data.getValue().navn2Property());
+		datoSpiller.setCellValueFactory(data -> data.getValue().datoProperty());
+		
+		tableView.setItems(details);
+		StackPane sp = new StackPane(tableView);
+		Scene scene = new Scene(sp);
+		subStage.setScene(scene);
+		subStage.setResizable(false);
+		subStage.show();
+		
+		
+		/*
+		  // Legger til søke funksjonen ChoiceBox<String> choiceBox = new ChoiceBox();
+		  choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
+		  
+		  TextField textField = new TextField(); textField.setPromptText("Søk her");
+		  textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
+		  "Navn": // flPerson.setPredicate(p -> //
+		  p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
+		  ; break; case "Resultat": // flPerson.setPredicate(p -> //
+		  p.getNavn1().toLowerCase().contains(textField.getText().toLowerCase().trim())
+		  ); break; } });
+		  
+		  choiceBox.getSelectionModel().selectedItemProperty().addListener((obs,
+		  oldVal, newVal) -> { if (newVal != null) { textField.setText(""); //
+		  flPerson.setPredicate(null); } });
+		*/
+		
+		
+		/*
+		 * HBox hBox = new HBox(choiceBox, textField); hBox.setAlignment(Pos.CENTER);
+		 * final VBox vbox = new VBox(); vbox.setSpacing(5); vbox.setPadding(new
+		 * Insets(10, 0, 0, 10)); vbox.getChildren().addAll(label, table, hBox);
+		 * 
+		 * ((Group) scene.getRoot()).getChildren().addAll(vbox);
+		 * 
+		 * 
+		 * stage.setScene(scene); stage.show();
+		 */
 	}
-	
+
+	private class SpillerData {
+		StringProperty navn = new SimpleStringProperty();
+		StringProperty navn2 = new SimpleStringProperty();
+		StringProperty dato = new SimpleStringProperty();
+		StringProperty resultat = new SimpleStringProperty();
+
+		public final StringProperty navnProperty() {
+			return this.navn;
+		}
+
+		public final java.lang.String getNavn() {
+			return this.navnProperty().get();
+		}
+
+		public final void setNavn(final java.lang.String navn) {
+			this.navnProperty().set(navn);
+		}
+
+		public final StringProperty navn2Property() {
+			return this.navn2;
+		}
+
+		public final java.lang.String getNavn2() {
+			return this.navn2Property().get();
+		}
+
+		public final void setNavn2(final java.lang.String navn2) {
+			this.navn2Property().set(navn2);
+		}
+
+		public final StringProperty datoProperty() {
+			return this.dato;
+		}
+
+		public final java.lang.String getDato() {
+			return this.datoProperty().get();
+		}
+
+		public final void setDato(final java.lang.String dato) {
+			this.datoProperty().set(dato);
+		}
+
+		/*
+		 * public final StringProperty resultatProperty() { return this.resultat; }
+		 * 
+		 * public final java.lang.String getResultat() { return
+		 * this.resultatProperty().get(); }
+		 * 
+		 * public final void setResultat(final java.lang.String resultat) {
+		 * this.resultatProperty().set(resultat); }
+		 * 
+		 */
+
+	}
+
 }
