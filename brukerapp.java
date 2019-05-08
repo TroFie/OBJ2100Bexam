@@ -80,22 +80,22 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button sÃ¸kPartier = new Button("SÃ¸k etter parti");
-		sÃ¸kPartier.setMinWidth(100);
-		sÃ¸kPartier.setMaxWidth(150);
+		Button søkPartier = new Button("Søk etter parti");
+		søkPartier.setMinWidth(100);
+		søkPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("Ã…pne brettet");
-		sÃ¸kPartier.setMinWidth(100);
-		sÃ¸kPartier.setMaxWidth(150);
+		Button visBrett = new Button("Åpne brettet");
+		visBrett.setMinWidth(100);
+		visBrett.setMaxWidth(150);
 
-		meny.getChildren().addAll(openScore, sÃ¸kPartier, visBrett);
+		meny.getChildren().addAll(openScore, søkPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
 			scoreBoard();
 
 		});
 
-		sÃ¸kPartier.setOnMouseClicked(e -> {
+		søkPartier.setOnMouseClicked(e -> {
 			try {
 				searchParti();
 			} catch (Exception e1) {
@@ -134,31 +134,6 @@ public class brukerapp extends Application {
 		String White_Queen = "ikoner\\White_Queen.png";
 		String White_King = "ikoner\\White_King.png";
 		String White_Pawn = "ikoner\\White_Pawn.png";
-
-		Stage subStage = new Stage();
-		GridPane root = new GridPane();
-		final int size = 8;
-
-		for (int rad = 0; rad < size; rad++) {
-			for (int kol = 0; kol < size; kol++) {
-				StackPane square = new StackPane();
-				String color;
-				if ((rad + kol) % 2 == 0) {
-					color = "beige";
-				} else {
-					color = "tan";
-				}
-				square.setStyle("-fx-background-color: " + color + ";");
-				root.add(square, kol, rad);
-			}
-		}
-
-		for (int i = 0; i < size; i++) {
-			root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE,
-					Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-			root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY,
-					Priority.ALWAYS, VPos.CENTER, true));
-		}
 
 		Stage subStage = new Stage(); 
 		GridPane root = new GridPane(); 
