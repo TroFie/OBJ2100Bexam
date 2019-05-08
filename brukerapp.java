@@ -1,16 +1,24 @@
 import java.awt.TextArea;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,13 +30,17 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.Files;
 
 import javafx.application.Application;
@@ -50,6 +62,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class brukerapp extends Application {
+	
+	int index = -1;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -334,6 +348,7 @@ public class brukerapp extends Application {
 
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	void searchParti() throws Exception {
 		Stage subStage = new Stage();
 		Scene scene = new Scene(new Group());
@@ -360,7 +375,7 @@ public class brukerapp extends Application {
 		TableColumn<SpillerData, String> navnSpiller = new TableColumn("Navn");
 		TableColumn<SpillerData, String> navnSpiller2 = new TableColumn("Navn2");
 		TableColumn<SpillerData, String> datoSpiller = new TableColumn("Dato");
-
+		
 		navnSpiller.setMinWidth(100);
 		navnSpiller2.setMinWidth(100);
 		datoSpiller.setMinWidth(200);
@@ -372,10 +387,45 @@ public class brukerapp extends Application {
 		navnSpiller2.setCellValueFactory(data -> data.getValue().navn2Property());
 		datoSpiller.setCellValueFactory(data -> data.getValue().datoProperty());
 
+		tableView.getSelectionModel().setCellSelectionEnabled(true);
+		ObservableList selectedCells = tableView.getSelectionModel().getSelectedCells();
+		
+		// Sjekker hvilken rad som er markert
+		selectedCells.addListener((ListChangeListener) c -> {
+		    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+		    int val = tablePosition.getRow();
+		    index = val;
+		});
+		
 		Button velgKnapp = new Button("Se parti");
 		velgKnapp.setOnMouseClicked(e -> {
-			visBrett();
-			// GJØR INGENTING ATM. LEGG TIL FUNKSJON FOR Å ÅPNE KARTET OG SE PÅ TINGEN?
+			navnSpiller.getCellData(index);
+			navnSpiller2.getCellData(index);
+			datoSpiller.getCellData(index);
+			String fil = "resultat" + navnSpiller.getCellData(index) + navnSpiller2.getCellData(index) + datoSpiller.getCellData(index) + ".dat";
+			try(
+					ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fil))); 
+					) {
+						ArrayList<Deltaker> t1 = (ArrayList<Deltaker>)(input.readObject());
+						System.out.println(t1.toString());
+						ArrayList<Deltaker> t = (ArrayList<Deltaker>)(input.readObject());
+						System.out.println(t.toString());
+						ArrayList<Date> t2 = (ArrayList<Date>)(input.readObject());
+						System.out.println(t2.toString());
+						ArrayList<Resultat> t3 = (ArrayList<Resultat>)(input.readObject());
+						System.out.println(t3.toString());
+						ArrayList<Trekk> t4 = (ArrayList<Trekk>)(input.readObject());
+						System.out.println(t4.toString());
+						
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						System.out.println("End of file");
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					}
+			//visBrett();
+			
 		});
 	
 		TextField textField = new TextField();
