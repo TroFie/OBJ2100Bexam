@@ -176,7 +176,7 @@ public class brukerapp extends Application {
 		subStage.show();
 	}
 
-	Button søk;
+
 
 	void searchParti() throws Exception {
 		Stage subStage = new Stage();
@@ -216,38 +216,40 @@ public class brukerapp extends Application {
 		navnSpiller2.setCellValueFactory(data -> data.getValue().navn2Property());
 		datoSpiller.setCellValueFactory(data -> data.getValue().datoProperty());
 
-
+		Button velgKnapp = new Button("Se parti");
+		velgKnapp.setOnMouseClicked(e -> {
+			visBrett();
+			// GJØR INGENTING ATM. LEGG TIL FUNKSJON FOR Å ÅPNE KARTET OG SE PÅ TINGEN?
+		});
+	
 		TextField textField = new TextField();
 		textField.setPromptText("Søk her");
 		textField.setOnKeyReleased(keyEvent -> {
-			
 
-				if(textField.textProperty().get().isEmpty()) {
-					tableView.setItems(details);
-					return;
-				}
-				
-				ObservableList<SpillerData> tableItems = FXCollections.observableArrayList();
-				ObservableList<TableColumn<SpillerData, ?>> cols = tableView.getColumns();
-				for(int i=0; i<details.size(); i++) {
-					
-					for(int j=0; j<cols.size(); j++) {
-						TableColumn col = cols.get(j);
-						String cellValue = col.getCellData(details.get(i)).toString();
-						cellValue = cellValue.toLowerCase();
-						if(cellValue.contains(textField.textProperty().get().toLowerCase())) {
-							tableItems.add(details.get(i));
-							break;
-						}
+			if (textField.textProperty().get().isEmpty()) {
+				tableView.setItems(details);
+				return;
+			}
+
+			ObservableList<SpillerData> tableItems = FXCollections.observableArrayList();
+			ObservableList<TableColumn<SpillerData, ?>> cols = tableView.getColumns();
+			for (int i = 0; i < details.size(); i++) {
+
+				for (int j = 0; j < cols.size(); j++) {
+					TableColumn col = cols.get(j);
+					String cellValue = col.getCellData(details.get(i)).toString();
+					cellValue = cellValue.toLowerCase();
+					if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+						tableItems.add(details.get(i));
+						break;
 					}
 				}
-				tableView.setItems(tableItems);
+			}
+			tableView.setItems(tableItems);
 
 		});
 
-		
-
-		HBox hBox = new HBox(textField);
+		HBox hBox = new HBox(textField, velgKnapp);
 		hBox.setAlignment(Pos.CENTER);
 		final VBox vbox = new VBox();
 		vbox.setSpacing(5);
