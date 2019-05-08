@@ -1,4 +1,3 @@
-
 import java.awt.TextArea;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,22 +80,22 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button søkPartier = new Button("Søk etter parti");
-		søkPartier.setMinWidth(100);
-		søkPartier.setMaxWidth(150);
+		Button sÃ¸kPartier = new Button("SÃ¸k etter parti");
+		sÃ¸kPartier.setMinWidth(100);
+		sÃ¸kPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("Åpne brettet");
-		søkPartier.setMinWidth(100);
-		søkPartier.setMaxWidth(150);
+		Button visBrett = new Button("Ã…pne brettet");
+		sÃ¸kPartier.setMinWidth(100);
+		sÃ¸kPartier.setMaxWidth(150);
 
-		meny.getChildren().addAll(openScore, søkPartier, visBrett);
+		meny.getChildren().addAll(openScore, sÃ¸kPartier, visBrett);
 
 		openScore.setOnMouseClicked(e -> {
 			scoreBoard();
 
 		});
 
-		søkPartier.setOnMouseClicked(e -> {
+		sÃ¸kPartier.setOnMouseClicked(e -> {
 			try {
 				searchParti();
 			} catch (Exception e1) {
@@ -110,51 +109,56 @@ public class brukerapp extends Application {
 		});
 
 	}
-/*
+	/*
+	 * void visBrett() { int WIDTH = 80; int HEIGHT = 80; int BOARD_SIZE = 640;
+	 * Stage subStage = new Stage(); Group root = new Group(); Scene scene = new
+	 * Scene(root, BOARD_SIZE, BOARD_SIZE); subStage.setScene(scene); for (int x =
+	 * 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) { for (int y = 0; y <
+	 * BOARD_SIZE; y = y + HEIGHT) { if (c % 2 == 0) { Rectangle r = new
+	 * Rectangle(); r.setX(x); r.setY(y); r.setWidth(WIDTH); r.setHeight(HEIGHT);
+	 * root.getChildren().add(r); } c++; } } subStage.show(); }
+	 */
+
 	void visBrett() {
 
-		int WIDTH = 80;
-		int HEIGHT = 80;
-		int BOARD_SIZE = 640;
+		String Black_Rook = "ikoner\\Black_Rook.png";
+		String Black_Knight = "ikoner\\Black_Knight.png";
+		String Black_Bishop = "ikoner\\Black_Bishop.png";
+		String Black_Queen = "ikoner\\Black_Queen.png";
+		String Black_King = "ikoner\\Black_King.png";
+		String Black_Pawn = "ikoner\\Black_Pawn.png";
+		// black pieces
+		String White_Rook = "ikoner\\White_Rook.png";
+		String White_Knight = "ikoner\\White_Knight.png";
+		String White_Bishop = "ikoner\\White_Bishop.png";
+		String White_Queen = "ikoner\\White_Queen.png";
+		String White_King = "ikoner\\White_King.png";
+		String White_Pawn = "ikoner\\White_Pawn.png";
 
 		Stage subStage = new Stage();
-		Group root = new Group();
-		Scene scene = new Scene(root, BOARD_SIZE, BOARD_SIZE);
-		subStage.setScene(scene);
-		for (int x = 0, c = 0; x < BOARD_SIZE; x = x + WIDTH, c++) {
-			for (int y = 0; y < BOARD_SIZE; y = y + HEIGHT) {
-				if (c % 2 == 0) {
-					Rectangle r = new Rectangle();
-					r.setX(x);
-					r.setY(y);
-					r.setWidth(WIDTH);
-					r.setHeight(HEIGHT);
+		GridPane root = new GridPane();
+		final int size = 8;
 
-					root.getChildren().add(r);
+		for (int rad = 0; rad < size; rad++) {
+			for (int kol = 0; kol < size; kol++) {
+				StackPane square = new StackPane();
+				String color;
+				if ((rad + kol) % 2 == 0) {
+					color = "beige";
+				} else {
+					color = "tan";
 				}
-				c++;
+				square.setStyle("-fx-background-color: " + color + ";");
+				root.add(square, kol, rad);
 			}
 		}
 
-		subStage.show();
-	}
-	*/
-	
-	void visBrett() {
-		
-		String Black_Rook = "ikoner\\Black_Rook.png"; 
-	    String Black_Knight = "ikoner\\Black_Knight.png"; 
-	    String Black_Bishop = "ikoner\\Black_Bishop.png"; 
-	    String Black_Queen = "ikoner\\Black_Queen.png"; 
-	    String Black_King = "ikoner\\Black_King.png"; 
-	    String Black_Pawn = "ikoner\\Black_Pawn.png"; 
-	    //black pieces 
-	    String White_Rook = "ikoner\\White_Rook.png"; 
-	    String White_Knight = "ikoner\\White_Knight.png"; 
-	    String White_Bishop = "ikoner\\White_Bishop.png"; 
-	    String White_Queen = "ikoner\\White_Queen.png"; 
-	    String White_King = "ikoner\\White_King.png"; 
-	    String White_Pawn = "ikoner\\White_Pawn.png"; 
+		for (int i = 0; i < size; i++) {
+			root.getColumnConstraints().add(new ColumnConstraints(5, Control.USE_COMPUTED_SIZE,
+					Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
+			root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY,
+					Priority.ALWAYS, VPos.CENTER, true));
+		}
 
 		Stage subStage = new Stage(); 
 		GridPane root = new GridPane(); 
@@ -184,7 +188,7 @@ public class brukerapp extends Application {
             root.getRowConstraints().add(new RowConstraints(5, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true)); 
         } 
 		// Svarte brikker
-		// Svart tårn
+		// Svart tï¿½rn
 		ImageView imgViewBRook = new ImageView();
 		Image imageBRook = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook.setImage(imageBRook);
@@ -192,7 +196,7 @@ public class brukerapp extends Application {
 		imgViewBRook.setFitWidth(windowSize/11);
 		squares[0][0].setGraphic(imgViewBRook);
 		
-		// Svart tårn 2
+		// Svart tï¿½rn 2
 		ImageView imgViewBRook2 = new ImageView();
 		Image imageBRook2 = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook2.setImage(imageBRook2);
@@ -216,7 +220,7 @@ public class brukerapp extends Application {
 		imgViewBKnight2.setFitWidth(windowSize/11);
 		squares[0][6].setGraphic(imgViewBKnight2);
 		
-		// Svart løper
+		// Svart lï¿½per
 		ImageView imgViewBBishop = new ImageView();
 		Image imageBBishop = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop.setImage(imageBBishop);
@@ -224,7 +228,7 @@ public class brukerapp extends Application {
 		imgViewBBishop.setFitWidth(windowSize/11);
 		squares[0][2].setGraphic(imgViewBBishop);
 		
-		// Svart løper 2
+		// Svart lï¿½per 2
 		ImageView imgViewBBishop2 = new ImageView();
 		Image imageBBishop2 = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop2.setImage(imageBBishop2);
@@ -258,7 +262,7 @@ public class brukerapp extends Application {
 		}
 		
 		// Hvite brikker
-		// Hvitt tårn
+		// Hvitt tï¿½rn
 		ImageView imgViewWRook = new ImageView();
 		Image imageWRook = new Image(brukerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook.setImage(imageWRook);
@@ -266,7 +270,7 @@ public class brukerapp extends Application {
 		imgViewWRook.setFitWidth(windowSize/11);
 		squares[7][0].setGraphic(imgViewWRook);
 		
-		// Hvitt tårn 2
+		// Hvitt tï¿½rn 2
 		ImageView imgViewWRook2 = new ImageView();
 		Image imageWRook2 = new Image(brukerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook2.setImage(imageWRook2);
@@ -290,7 +294,7 @@ public class brukerapp extends Application {
 		imgViewWKnight2.setFitWidth(windowSize/11);
 		squares[7][6].setGraphic(imgViewWKnight2);
 		
-		// Hvit løper
+		// Hvit lï¿½per
 		ImageView imgViewWBishop = new ImageView();
 		Image imageWBishop = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop.setImage(imageWBishop);
@@ -298,7 +302,7 @@ public class brukerapp extends Application {
 		imgViewWBishop.setFitWidth(windowSize/11);
 		squares[7][2].setGraphic(imgViewWBishop);
 		
-		// Hvit løper 2
+		// Hvit lï¿½per 2
 		ImageView imgViewWBishop2 = new ImageView();
 		Image imageWBishop2 = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop2.setImage(imageWBishop2);
@@ -338,7 +342,6 @@ public class brukerapp extends Application {
 	
 		
 	}
-	
 
 	void scoreBoard() {
 		Stage subStage = new Stage();
@@ -354,14 +357,15 @@ public class brukerapp extends Application {
 		subStage.show();
 	}
 
-	Button søk;
+
 
 	void searchParti() throws Exception {
 		Stage subStage = new Stage();
+		Scene scene = new Scene(new Group());
 		subStage.setTitle("Parti-liste");
 		subStage.setWidth(400);
 		subStage.setHeight(550);
-		
+
 		final Label label = new Label("Parti-liste");
 		label.setFont(new Font("Arial", 19));
 
@@ -386,39 +390,81 @@ public class brukerapp extends Application {
 		navnSpiller2.setMinWidth(100);
 		datoSpiller.setMinWidth(200);
 
+		tableView.setItems(details);
 		tableView.getColumns().addAll(navnSpiller, navnSpiller2, datoSpiller);
 
 		navnSpiller.setCellValueFactory(data -> data.getValue().navnProperty());
 		navnSpiller2.setCellValueFactory(data -> data.getValue().navn2Property());
 		datoSpiller.setCellValueFactory(data -> data.getValue().datoProperty());
-		
+
+		Button velgKnapp = new Button("Se parti");
+		velgKnapp.setOnMouseClicked(e -> {
+			visBrett();
+			// GJÃ˜R INGENTING ATM. LEGG TIL FUNKSJON FOR Ã… Ã…PNE KARTET OG SE PÃ… TINGEN?
+		});
+	
+		TextField textField = new TextField();
+		textField.setPromptText("SÃ¸k her");
+		textField.setOnKeyReleased(keyEvent -> {
+
+			if (textField.textProperty().get().isEmpty()) {
+				tableView.setItems(details);
+				return;
+			}
+
+			ObservableList<SpillerData> tableItems = FXCollections.observableArrayList();
+			ObservableList<TableColumn<SpillerData, ?>> cols = tableView.getColumns();
+			for (int i = 0; i < details.size(); i++) {
+
+				for (int j = 0; j < cols.size(); j++) {
+					TableColumn col = cols.get(j);
+					String cellValue = col.getCellData(details.get(i)).toString();
+					cellValue = cellValue.toLowerCase();
+					if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+						tableItems.add(details.get(i));
+						break;
+					}
+				}
+			}
+			tableView.setItems(tableItems);
+
+		});
+
+		HBox hBox = new HBox(textField, velgKnapp);
+		hBox.setAlignment(Pos.CENTER);
+		final VBox vbox = new VBox();
+		vbox.setSpacing(5);
+		vbox.setPadding(new Insets(10, 0, 0, 10));
+		vbox.getChildren().addAll(label, tableView, hBox);
+
+		((Group) scene.getRoot()).getChildren().addAll(vbox);
 		tableView.setItems(details);
-		StackPane sp = new StackPane(tableView);
-		Scene scene = new Scene(sp);
 		subStage.setScene(scene);
 		subStage.setResizable(false);
 		subStage.show();
-		
-		
+
 		/*
-		  // Legger til søke funksjonen ChoiceBox<String> choiceBox = new ChoiceBox();
-		  choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
-		  
-		  TextField textField = new TextField(); textField.setPromptText("Søk her");
-		  textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
-		  "Navn": // flPerson.setPredicate(p -> //
-		  p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
-		  ; break; case "Resultat": // flPerson.setPredicate(p -> //
-		  p.getNavn1().toLowerCase().contains(textField.getText().toLowerCase().trim())
-		  ); break; } });
-		  
-		  choiceBox.getSelectionModel().selectedItemProperty().addListener((obs,
-		  oldVal, newVal) -> { if (newVal != null) { textField.setText(""); //
-		  flPerson.setPredicate(null); } });
-		*/
-		
-		
-		/*
+		 * ChoiceBox<String> choiceBox = new ChoiceBox();
+		 * choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
+		 * 
+		 * ChoiceBox<String> choiceBox = new ChoiceBox();
+		 * choiceBox.getItems().addAll("Navn", "Resultat"); choiceBox.setValue("Navn");
+		 * 
+		 * TextField textField = new TextField(); textField.setPromptText("SÃ¸k her");
+		 * textField.setOnKeyReleased(keyEvent -> { switch (choiceBox.getValue()) { case
+		 * "Navn": // flPerson.setPredicate(p -> // //
+		 * p.getNavn().toLowerCase().contains(textField.getText().toLowerCase().trim()))
+		 * ; break; case "Resultat": // flPerson.setPredicate(p -> // //
+		 * p.getNavn1().toLowerCase().contains(textField.getText().toLowerCase().trim())
+		 * ); break; } });
+		 * 
+		 * choiceBox.getSelectionModel().selectedItemProperty().addListener((obs,
+		 * oldVal, newVal) -> { if (newVal != null) { textField.setText(""); //
+		 * flPerson.setPredicate(null); } });
+		 * 
+		 * 
+		 * 
+		 * 
 		 * HBox hBox = new HBox(choiceBox, textField); hBox.setAlignment(Pos.CENTER);
 		 * final VBox vbox = new VBox(); vbox.setSpacing(5); vbox.setPadding(new
 		 * Insets(10, 0, 0, 10)); vbox.getChildren().addAll(label, table, hBox);
