@@ -344,8 +344,8 @@ public class brukerapp extends Application {
 		final Label label = new Label("Parti-liste");
 		label.setFont(new Font("Arial", 19));
 
-		Collection<SpillerData> list = Files.readAllLines(new File("test.txt").toPath()).stream().map(line -> {
-			String[] details = line.split("-|\\  |\\Dato:");
+		Collection<SpillerData> list = Files.readAllLines(new File("forSearching.txt").toPath()).stream().map(line -> {
+			String[] details = line.split(",|\\  |\\\n");
 			SpillerData cd = new SpillerData();
 			cd.setNavn(details[0]);
 			cd.setNavn2(details[1]);

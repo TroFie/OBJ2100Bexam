@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -465,6 +466,19 @@ public class admapp extends Application{
 	        } catch (IOException ex) {
 	           ex.printStackTrace();
 	       	}
+			
+	    	try(FileWriter fw = new FileWriter("forSearching.txt", true);
+	    		    BufferedWriter bw = new BufferedWriter(fw);
+	    		    PrintWriter out = new PrintWriter(bw))
+	    		{
+	    		    out.print(navnFelt1.getText() + ", ");
+	    		    out.print(navnFelt2.getText() + ", ");
+	    		    out.print(datoFelt.getText() + "\n");
+	    		} catch (IOException ez) {
+	    		}
+	    	
+					
+		
 	    	
 			try(
 				ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file))); 
