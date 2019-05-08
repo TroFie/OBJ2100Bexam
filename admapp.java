@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,15 +41,14 @@ public class admapp extends Application{
 	
 	public ArrayList<Parti> partiListe = new ArrayList<Parti>();
 	
-	public String[]trekkHvit = new String[500];
-	public String[]trekkSort = new String[500];
+	public ArrayList<Trekk> trekkListe = new ArrayList<Trekk>();
+	
 	
 	MenuItem a;
 	MenuItem remisItem;
 	MenuItem b;
 	MenuItem b2;
-	int trekkTellerHvit = 0;
-	int trekkTellerSort = 0;
+	
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -79,7 +79,7 @@ public class admapp extends Application{
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        
+        // Fyller opp partiListe med eksisterende partier
         File partiFile = new File("partier.txt");
         try {
             FileInputStream fis = new FileInputStream(partiFile);
@@ -101,6 +101,30 @@ public class admapp extends Application{
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
+     // Fyller opp liste med eksisterende resultater
+     		File file3 = new File("resultat.dat");
+             try {
+                 FileInputStream fis = new FileInputStream(file3);
+                 ObjectInputStream ois = new ObjectInputStream(fis);
+               
+                 ArrayList<Trekk> deserializeBruker = (ArrayList<Trekk>)ois.readObject();
+                 ois.close();
+                 
+                 Iterator<Trekk> iter = deserializeBruker.iterator();
+                 while(iter.hasNext()){
+                	 Trekk s = iter.next();
+                     trekkListe.add(new Trekk(s.getTrekk()));
+                	 
+                 }
+                 
+             } catch (FileNotFoundException ex) {
+             } catch (IOException ex) {
+            	 ex.printStackTrace();
+             } catch (ClassNotFoundException ex) {
+                 ex.printStackTrace();
+             }catch (ClassCastException ex) {
+                 
+             }
         
 		// Pane        
 		BorderPane pane = new BorderPane();
@@ -326,6 +350,8 @@ public class admapp extends Application{
 }
 	
 	void registrerResultat() {
+
+    	trekkListe.add(new Trekk("TREKK: "));
 		Stage subStage = new Stage();
 		subStage.setHeight(700);
 		subStage.setResizable(false);
@@ -334,8 +360,7 @@ public class admapp extends Application{
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
 	    TextField datoFelt = new TextField();
-	    TextField trekkFeltHvit = new TextField();
-	    TextField trekkFeltSort = new TextField();
+	    TextField trekkFelt = new TextField();
 	    TextField resultatFelt = new TextField();
 	    
 	    MenuButton meny = new MenuButton("Parti");
@@ -347,17 +372,13 @@ public class admapp extends Application{
 	    Text trekkTxt = new Text("Fyll inn trekk");
 	    
 	    Button byttPlass = new Button("Bytt plass");
-	    Button regTrekkHvit = new Button("Registrer trekk (Hvit)");
-	    Button regTrekkSort = new Button("Registrer trekk (Sort)");
+	    Button regTrekk = new Button("Registrer trekk");
 	    Button lagreResultat = new Button("Lagre resultat");
 	    Button seResultatListe = new Button("Se liste");
 	    Button avbryt = new Button("Avbryt");
-	    
-	    
-	    regTrekkSort.setMinWidth(100);
-	    regTrekkSort.setMaxWidth(150);
-	    regTrekkHvit.setMinWidth(100);
-	    regTrekkHvit.setMaxWidth(150);
+	   
+	    regTrekk.setMinWidth(100);
+	    regTrekk.setMaxWidth(150);
 	    resultatMeny.setMinWidth(100);
 	    resultatMeny.setMaxWidth(150);
 	    byttPlass.setMinWidth(100);
@@ -379,7 +400,7 @@ public class admapp extends Application{
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(10,10,10,10));
 	    layout.getChildren().addAll(meny, deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2,  byttPlass, datoTxt, datoFelt,
-	    		trekkTxt, trekkFeltHvit, regTrekkHvit, trekkFeltSort, regTrekkSort, resultatMeny, resultatFelt, lagreResultat, seResultatListe, avbryt);
+	    		trekkTxt, trekkFelt, regTrekk, resultatMeny, resultatFelt, lagreResultat, seResultatListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
@@ -402,7 +423,7 @@ public class admapp extends Application{
 	    		navnFelt1.setText(navn1);
 	    		navnFelt2.setText(navn2);
 	    		datoFelt.setText(dato);
-	    		removeTxt(resultatFelt);
+	    		resultatFelt.setText(null);
 	    	});
 	    }
 	    
@@ -419,37 +440,58 @@ public class admapp extends Application{
 	    	String n1 = navnFelt1.getText();
 	    	navnFelt1.setText(navnFelt2.getText());
 	    	navnFelt2.setText(n1);
+	    	resultatFelt.setText(null);
 	    });
-	    regTrekkHvit.setOnMouseClicked(e->{
-	    	if(trekkFeltHvit.getText().isEmpty() == false) {
-	    		trekkHvit[trekkTellerHvit] = trekkFeltHvit.getText();
-	    		trekkFeltHvit.setText("");
-	    		trekkTellerHvit ++;
-	    	}
-	    });
-	    regTrekkSort.setOnMouseClicked(e->{
-	    	if(trekkFeltSort.getText().isEmpty() == false) {
-	    		trekkSort[trekkTellerSort] = trekkFeltSort.getText();
-	    		trekkFeltSort.setText("");
-	    		trekkTellerSort ++;
+	    regTrekk.setOnMouseClicked(e->{
+	    	if(trekkFelt.getText().isEmpty() == false) {
+	    		trekkListe.add(new Trekk(trekkFelt.getText()));
+	    		trekkFelt.setText("");
 	    	}
 	    });
 	    
 
 	    // Oppretter resultat-filer
 	    lagreResultat.setOnMouseClicked(e -> {
-	    	for(int i=0; i<trekkTellerHvit; i++) {
-	    		System.out.println(trekkHvit[i]);
+	    	if(navnFelt1.getText().isEmpty() == false) {
+	    	trekkListe.add(new Trekk("NAVN (HVIT): "));
+	    	trekkListe.add(new Trekk(navnFelt1.getText()));
+	    	trekkListe.add(new Trekk("NAVN (SORT): "));
+	    	trekkListe.add(new Trekk(navnFelt2.getText()));
+	    	trekkListe.add(new Trekk("DATO: "));
+	    	trekkListe.add(new Trekk(datoFelt.getText()));
+	    	trekkListe.add(new Trekk("RESULTAT: "));
+	    	trekkListe.add(new Trekk(resultatFelt.getText()));
+	    	
+	    	File file = new File("resultat.dat");
+	    	try {
+	    		FileOutputStream fos = new FileOutputStream(file);
+	    		ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    		oos.writeObject(trekkListe);
+	    		oos.close();
+	            
+	        } catch (FileNotFoundException ex) {
+	           ex.printStackTrace();
+	        } catch (IOException ex) {
+	           ex.printStackTrace();
+	       	}
+	    	
+			try(
+				ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream("resultat.dat"))); 
+				) {
+					Object t1 = input.readObject();
+					System.out.println(t1.toString());
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					System.out.println("End of file");
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
 	    	}
 	    });
-	    
+
 	    avbryt.setOnMouseClicked(e -> {
-	    	System.out.println(partiListe.size());
+	    	subStage.close();
 	    });
 	}
-	
-	public void removeTxt(TextField r) {
-		r.setText("");
-	}
-
 }

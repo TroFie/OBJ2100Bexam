@@ -1,6 +1,10 @@
 import java.io.Serializable;
 public class Deltaker implements Serializable{
-    String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -749426538439538803L;
+	String name;
     Double score;
 
     Deltaker(){}

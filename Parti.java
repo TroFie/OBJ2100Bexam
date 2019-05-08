@@ -1,7 +1,11 @@
 import java.io.Serializable;
 
 public class Parti implements Serializable {
-    String name1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7044072123791457954L;
+	String name1;
     String name2;
     String dato;
 
