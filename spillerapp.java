@@ -51,7 +51,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class brukerapp extends Application {
+public class spillerapp extends Application {
 	
 	int index = -1;
 
@@ -160,7 +160,7 @@ public class brukerapp extends Application {
 		// Svarte brikker
 		// Black rook 2
 		ImageView imgViewBRook = new ImageView();
-		Image imageBRook = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		Image imageBRook = new Image(spillerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook.setImage(imageBRook);
 		imgViewBRook.setFitHeight(windowSize/11);
 		imgViewBRook.setFitWidth(windowSize/11);
@@ -168,7 +168,7 @@ public class brukerapp extends Application {
 		
 		// Black rook 2
 		ImageView imgViewBRook2 = new ImageView();
-		Image imageBRook2 = new Image(brukerapp.class.getResourceAsStream(Black_Rook));
+		Image imageBRook2 = new Image(spillerapp.class.getResourceAsStream(Black_Rook));
 		imgViewBRook2.setImage(imageBRook2);
 		imgViewBRook2.setFitHeight(windowSize/11);
 		imgViewBRook2.setFitWidth(windowSize/11);
@@ -176,7 +176,7 @@ public class brukerapp extends Application {
 		
 		// Black knight 2
 		ImageView imgViewBKnight = new ImageView();
-		Image imageBKnight = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		Image imageBKnight = new Image(spillerapp.class.getResourceAsStream(Black_Knight));
 		imgViewBKnight.setImage(imageBKnight);
 		imgViewBKnight.setFitHeight(windowSize/11);
 		imgViewBKnight.setFitWidth(windowSize/11);
@@ -184,7 +184,7 @@ public class brukerapp extends Application {
 		
 		// Black knight 2
 		ImageView imgViewBKnight2 = new ImageView();
-		Image imageBKnight2 = new Image(brukerapp.class.getResourceAsStream(Black_Knight));
+		Image imageBKnight2 = new Image(spillerapp.class.getResourceAsStream(Black_Knight));
 		imgViewBKnight2.setImage(imageBKnight2);
 		imgViewBKnight2.setFitHeight(windowSize/11);
 		imgViewBKnight2.setFitWidth(windowSize/11);
@@ -192,7 +192,7 @@ public class brukerapp extends Application {
 		
 		// Black bishop 2
 		ImageView imgViewBBishop = new ImageView();
-		Image imageBBishop = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		Image imageBBishop = new Image(spillerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop.setImage(imageBBishop);
 		imgViewBBishop.setFitHeight(windowSize/11);
 		imgViewBBishop.setFitWidth(windowSize/11);
@@ -200,7 +200,7 @@ public class brukerapp extends Application {
 		
 		// Black bishop 2
 		ImageView imgViewBBishop2 = new ImageView();
-		Image imageBBishop2 = new Image(brukerapp.class.getResourceAsStream(Black_Bishop));
+		Image imageBBishop2 = new Image(spillerapp.class.getResourceAsStream(Black_Bishop));
 		imgViewBBishop2.setImage(imageBBishop2);
 		imgViewBBishop2.setFitHeight(windowSize/11);
 		imgViewBBishop2.setFitWidth(windowSize/11);
@@ -208,7 +208,7 @@ public class brukerapp extends Application {
 		
 		// Black queen
 		ImageView imgViewBQueen = new ImageView();
-		Image imageBQueen = new Image(brukerapp.class.getResourceAsStream(Black_Queen));
+		Image imageBQueen = new Image(spillerapp.class.getResourceAsStream(Black_Queen));
 		imgViewBQueen.setImage(imageBQueen);
 		imgViewBQueen.setFitHeight(windowSize/11);
 		imgViewBQueen.setFitWidth(windowSize/11);
@@ -216,7 +216,7 @@ public class brukerapp extends Application {
 		
 		// Black king
 		ImageView imgViewBKing = new ImageView();
-		Image imageBKing = new Image(brukerapp.class.getResourceAsStream(Black_King));
+		Image imageBKing = new Image(spillerapp.class.getResourceAsStream(Black_King));
 		imgViewBKing.setImage(imageBKing);
 		imgViewBKing.setFitHeight(windowSize/11);
 		imgViewBKing.setFitWidth(windowSize/11);
@@ -224,7 +224,7 @@ public class brukerapp extends Application {
 		
 		for(int i = 0; i < 8; i++) {
 			ImageView imgViewBPawn = new ImageView();
-			Image imageBPawn = new Image(brukerapp.class.getResourceAsStream(Black_Pawn));
+			Image imageBPawn = new Image(spillerapp.class.getResourceAsStream(Black_Pawn));
 			imgViewBPawn.setImage(imageBPawn);
 			imgViewBPawn.setFitHeight(windowSize/11);
 			imgViewBPawn.setFitWidth(windowSize/11);
@@ -234,7 +234,7 @@ public class brukerapp extends Application {
 		// Hvite brikker
 		// White rook
 		ImageView imgViewWRook = new ImageView();
-		Image imageWRook = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		Image imageWRook = new Image(spillerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook.setImage(imageWRook);
 		imgViewWRook.setFitHeight(windowSize/11);
 		imgViewWRook.setFitWidth(windowSize/11);
@@ -242,7 +242,7 @@ public class brukerapp extends Application {
 		
 		// White rook 2
 		ImageView imgViewWRook2 = new ImageView();
-		Image imageWRook2 = new Image(brukerapp.class.getResourceAsStream(White_Rook));
+		Image imageWRook2 = new Image(spillerapp.class.getResourceAsStream(White_Rook));
 		imgViewWRook2.setImage(imageWRook2);
 		imgViewWRook2.setFitHeight(windowSize/11);
 		imgViewWRook2.setFitWidth(windowSize/11);
@@ -250,7 +250,7 @@ public class brukerapp extends Application {
 		
 		// White knight
 		ImageView imgViewWKnight = new ImageView();
-		Image imageWKnight = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		Image imageWKnight = new Image(spillerapp.class.getResourceAsStream(White_Knight));
 		imgViewWKnight.setImage(imageWKnight);
 		imgViewWKnight.setFitHeight(windowSize/11);
 		imgViewWKnight.setFitWidth(windowSize/11);
@@ -258,7 +258,7 @@ public class brukerapp extends Application {
 		
 		// White knight 2
 		ImageView imgViewWKnight2 = new ImageView();
-		Image imageWKnight2 = new Image(brukerapp.class.getResourceAsStream(White_Knight));
+		Image imageWKnight2 = new Image(spillerapp.class.getResourceAsStream(White_Knight));
 		imgViewWKnight2.setImage(imageWKnight2);
 		imgViewWKnight2.setFitHeight(windowSize/11);
 		imgViewWKnight2.setFitWidth(windowSize/11);
@@ -266,7 +266,7 @@ public class brukerapp extends Application {
 		
 		// White bishop
 		ImageView imgViewWBishop = new ImageView();
-		Image imageWBishop = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		Image imageWBishop = new Image(spillerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop.setImage(imageWBishop);
 		imgViewWBishop.setFitHeight(windowSize/11);
 		imgViewWBishop.setFitWidth(windowSize/11);
@@ -274,7 +274,7 @@ public class brukerapp extends Application {
 		
 		// White bishop 2
 		ImageView imgViewWBishop2 = new ImageView();
-		Image imageWBishop2 = new Image(brukerapp.class.getResourceAsStream(White_Bishop));
+		Image imageWBishop2 = new Image(spillerapp.class.getResourceAsStream(White_Bishop));
 		imgViewWBishop2.setImage(imageWBishop2);
 		imgViewWBishop2.setFitHeight(windowSize/11);
 		imgViewWBishop2.setFitWidth(windowSize/11);
@@ -282,7 +282,7 @@ public class brukerapp extends Application {
 		
 		// White queen
 		ImageView imgViewWQueen = new ImageView();
-		Image imageWQueen = new Image(brukerapp.class.getResourceAsStream(White_Queen));
+		Image imageWQueen = new Image(spillerapp.class.getResourceAsStream(White_Queen));
 		imgViewWQueen.setImage(imageWQueen);
 		imgViewWQueen.setFitHeight(windowSize/11);
 		imgViewWQueen.setFitWidth(windowSize/11);
@@ -290,7 +290,7 @@ public class brukerapp extends Application {
 		
 		// White king
 		ImageView imgViewWKing = new ImageView();
-		Image imageWKing = new Image(brukerapp.class.getResourceAsStream(White_King));
+		Image imageWKing = new Image(spillerapp.class.getResourceAsStream(White_King));
 		imgViewWKing.setImage(imageWKing);
 		imgViewWKing.setFitHeight(windowSize/11);
 		imgViewWKing.setFitWidth(windowSize/11);
@@ -298,7 +298,7 @@ public class brukerapp extends Application {
 		
 		for(int i = 0; i < 8; i++) {
 			ImageView imgViewWPawn = new ImageView();
-			Image imageWPawn = new Image(brukerapp.class.getResourceAsStream(White_Pawn));
+			Image imageWPawn = new Image(spillerapp.class.getResourceAsStream(White_Pawn));
 			imgViewWPawn.setImage(imageWPawn);
 			imgViewWPawn.setFitHeight(windowSize/11);
 			imgViewWPawn.setFitWidth(windowSize/11);
