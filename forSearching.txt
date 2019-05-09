@@ -1,11 +1,2 @@
-Mathias,Henrik,21.10.2025 04:25
-Trotskij,Lenin,25.11.1932 02:00
-Andreas,Ole,29.04.1992
-Andreas,Ole,29.04.1992
-a,b,29.02.92 21:30
-a,b,29.02.92 21:30
-Meg,Deg,26.06.19 21:30
-Meg,Deg,26.06.19 21:30
-Meg,Deg,26.06.19 21:30
-Meg,Deg,26.06.19 21:30
-Boi,Big boi,21.07.19 21.50
+Andreas,Olav,29.04.19 21:30
+Simon,Henrik,12.12.20 10:00

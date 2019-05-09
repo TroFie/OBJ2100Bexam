@@ -548,6 +548,8 @@ public class admapp extends Application{
 				datoFelt.setText("");
 				resultatFelt.setText("");
 				statusFelt.setText("Resultat lagret..");
+				
+				trekkListe.removeAll(trekkListe);
 
 	    	}else {
 	    		statusFelt.setText("Fyll ut nødvendige felt..");

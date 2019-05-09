@@ -376,9 +376,14 @@ public class brukerapp extends Application {
 		
 		// Sjekker hvilken rad som er markert
 		selectedCells.addListener((ListChangeListener) c -> {
+			try {
 		    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
 		    int val = tablePosition.getRow();
 		    index = val;
+			}catch (IndexOutOfBoundsException e) {
+				System.out.println("Kan ikke søke etter klikk på parti..");
+				subStage.close();
+			}
 		});
 		
 		Button velgKnapp = new Button("Se parti");
