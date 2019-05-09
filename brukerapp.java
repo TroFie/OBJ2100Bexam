@@ -72,7 +72,7 @@ public class brukerapp extends Application {
 		VBox meny = new VBox();
 		meny.setPadding(new Insets(20, 20, 0, 20));
 		pane.setLeft(meny);
-		Scene scene = new Scene(pane, 850, 750);
+		Scene scene = new Scene(pane, 200, 100);
 
 		primaryStage.setTitle("Brukerapp");
 		primaryStage.setScene(scene);

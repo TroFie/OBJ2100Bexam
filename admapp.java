@@ -294,8 +294,7 @@ public class admapp extends Application{
 	    		navnFelt2.setText(navn1);
 	    	});
 	    }
-	    
-	    
+
 	    lagreParti.setOnMouseClicked(e -> {
 	    	if(navnFelt1.getText().isEmpty() || navnFelt2.getText().isEmpty() || datoTid.getText().isEmpty()) {
 	    		Stage popup = new Stage();
