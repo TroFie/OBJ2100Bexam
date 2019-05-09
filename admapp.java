@@ -1,6 +1,5 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,33 +9,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.Vector;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -60,12 +47,10 @@ public class admapp extends Application{
 	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss"); 
 	
 	String fil;
-	
 	MenuItem a;
 	MenuItem remisItem;
 	MenuItem b;
 	MenuItem b2;
-	
 	
 	public static void main(String[] args)throws Exception {
 		
@@ -75,12 +60,13 @@ public class admapp extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Fyller opp liste med eksisterende deltakere
-		File file = new File("deltaker.txt");
+		File file = new File("deltaker.dat");
         try {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
           
-            ArrayList<Deltaker> deserializeBruker = (ArrayList<Deltaker>)ois.readObject();
+            @SuppressWarnings("unchecked")
+			ArrayList<Deltaker> deserializeBruker = (ArrayList<Deltaker>)ois.readObject();
             ois.close();
             
             Iterator<Deltaker> iter = deserializeBruker.iterator();
@@ -102,7 +88,8 @@ public class admapp extends Application{
             FileInputStream fis = new FileInputStream(partiFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
           
-            ArrayList<Parti> deserializeParti = (ArrayList<Parti>)ois.readObject();
+            @SuppressWarnings("unchecked")
+			ArrayList<Parti> deserializeParti = (ArrayList<Parti>)ois.readObject();
             ois.close();
             
             Iterator<Parti> iter = deserializeParti.iterator();
@@ -190,7 +177,7 @@ public class admapp extends Application{
 	    lagreDeltaker.setOnMouseClicked(e -> {
 	    	deltakerListe.add(new Deltaker(navnFelt.getText()));
 	    	
-	        File file = new File("deltaker.txt");
+	        File file = new File("deltaker.dat");
 	        try {
 	            FileOutputStream fos = new FileOutputStream(file);
 	            ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -234,11 +221,9 @@ public class admapp extends Application{
 				}
 				input.close();
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	
 	    });
-	    
 	    avbryt.setOnMouseClicked(e -> {
 	    	subStage.close();
 	    });
@@ -254,10 +239,11 @@ public class admapp extends Application{
 	    TextField navnFelt2 = new TextField();
 	    TextField datoTid   = new TextField();
 	  
-	    Text deltakerNavn1 = new Text("Navn på deltaker 1");
-	    Text deltakerNavn2 = new Text("Navn på deltaker 2");
 	    Text dato 		   = new Text("Dato og tid. Form(29.04.19 21:30)");
 
+	    MenuButton menyD1 = new MenuButton("Velg deltaker 1");
+	    MenuButton menyD2 = new MenuButton("Velg deltaker 2");
+	    
 	    Button lagreParti = new Button("Lagre sjakkparti");
 	    lagreParti.setMinWidth(100);
 	    lagreParti.setMaxWidth(150);
@@ -272,11 +258,26 @@ public class admapp extends Application{
 	    
 	    VBox layout = new VBox(10);
 	    layout.setPadding(new Insets(20,20,20,20));
-	    layout.getChildren().addAll(deltakerNavn1, navnFelt1, deltakerNavn2, navnFelt2, dato, datoTid, lagreParti, seListe, avbryt);
+	    layout.getChildren().addAll(menyD1, navnFelt1, menyD2, navnFelt2, dato, datoTid, lagreParti, seListe, avbryt);
 	    
 	    Scene scene = new Scene(layout, 300, 200);
 	    subStage.setScene(scene);
 	    subStage.show();
+	    
+	    for(int i=0; i<deltakerListe.size(); i++) {
+	    	String navn1 = deltakerListe.get(i).getName();
+	    	MenuItem a = new MenuItem(navn1);
+	    	MenuItem b = new MenuItem(navn1);
+	    	menyD1.getItems().add(a);
+	    	menyD2.getItems().add(b);
+	    	// Fyller ut felter
+	    	a.setOnAction(e->{
+	    		navnFelt1.setText(navn1);
+	    	});
+	    	b.setOnAction(e->{
+	    		navnFelt2.setText(navn1);
+	    	});
+	    }
 	    
 	    
 	    lagreParti.setOnMouseClicked(e -> {
@@ -332,7 +333,6 @@ public class admapp extends Application{
 				}
 				input.close();
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}	
 	    });
@@ -448,6 +448,15 @@ public class admapp extends Application{
 	    // Oppretter resultat-filer
 	    lagreResultat.setOnMouseClicked(e -> {
 	    	if(resultatFelt.getText().isEmpty() == false && navnFelt1.getText().isEmpty() == false) {
+	    	// Tømmer tabellene, gjøre klar for ny input
+	    	// Hvis ikke får vi duplikater
+	    	if(!deltakerListe2.isEmpty()) {
+	    	deltakerListe2.remove(0);
+	    	deltakerListe3.remove(0);
+	    	datoListe.remove(0);
+	    	resultatListe.remove(0);
+	    	}
+	    	
 	    	deltakerListe2.add(new Deltaker(navnFelt1.getText()));
 	    	deltakerListe3.add(new Deltaker(navnFelt2.getText()));
 	    	datoListe.add(new Date());
@@ -483,17 +492,22 @@ public class admapp extends Application{
 			try(
 				ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file))); 
 				) {
+					@SuppressWarnings("unchecked")
 					ArrayList<Deltaker> t1 = (ArrayList<Deltaker>)(input.readObject());
 					System.out.println(t1.toString());
+					@SuppressWarnings("unchecked")
 					ArrayList<Deltaker> t = (ArrayList<Deltaker>)(input.readObject());
 					System.out.println(t.toString());
+					@SuppressWarnings("unchecked")
 					ArrayList<Date> t2 = (ArrayList<Date>)(input.readObject());
 					System.out.println(t2.toString());
+					@SuppressWarnings("unchecked")
 					ArrayList<Resultat> t3 = (ArrayList<Resultat>)(input.readObject());
 					System.out.println(t3.toString());
+					@SuppressWarnings("unchecked")
 					ArrayList<Trekk> t4 = (ArrayList<Trekk>)(input.readObject());
 					System.out.println(t4.toString());
-					
+
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
@@ -510,7 +524,6 @@ public class admapp extends Application{
 	    	}else {
 	    		statusFelt.setText("Fyll ut nødvendige felt..");
 	    	}
-	    	
 	    });
 
 	    avbryt.setOnMouseClicked(e -> {

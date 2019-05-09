@@ -84,11 +84,11 @@ public class brukerapp extends Application {
 		openScore.setMinWidth(100);
 		openScore.setMaxWidth(150);
 
-		Button finnPartier = new Button("Sï¿½k etter parti");
+		Button finnPartier = new Button("Søk etter parti");
 		finnPartier.setMinWidth(100);
 		finnPartier.setMaxWidth(150);
 
-		Button visBrett = new Button("ï¿½pne brettet");
+		Button visBrett = new Button("Åpne brettet");
 		visBrett.setMinWidth(100);
 		visBrett.setMaxWidth(150);
 
@@ -386,7 +386,7 @@ public class brukerapp extends Application {
 			navnSpiller.getCellData(index);
 			navnSpiller2.getCellData(index);
 			datoSpiller.getCellData(index);
-			String fil = "resultat" + navnSpiller.getCellData(index) + navnSpiller2.getCellData(index) + datoSpiller.getCellData(index) + ".dat";
+			String fil = new String("resultat" + navnSpiller.getCellData(index) + navnSpiller2.getCellData(index) + datoSpiller.getCellData(index) + ".dat");
 			try(
 					ObjectInputStream input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fil))); 
 					) {
