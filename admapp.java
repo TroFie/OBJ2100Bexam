@@ -25,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 
@@ -112,7 +113,7 @@ public class admapp extends Application{
 		VBox meny = new VBox();
 		meny.setPadding(new Insets(20,20,0,20));
 		pane.setLeft(meny);
-		Scene scene = new Scene(pane, 850, 750);
+		Scene scene = new Scene(pane, 200, 100);
 		
 		primaryStage.setTitle("Admapp");
 		primaryStage.setScene(scene);
@@ -175,6 +176,18 @@ public class admapp extends Application{
 	    
 	    
 	    lagreDeltaker.setOnMouseClicked(e -> {
+	    	if(navnFelt.getText().isEmpty()) {
+	    		Stage popup = new Stage();
+	    		popup.setHeight(70);
+	    		popup.setWidth(280);
+	    		popup.setResizable(false);
+	    		popup.setTitle("Popup");
+	    		Text popField = new Text("Fyll inn felt..");
+	    		VBox popLayout = new VBox(popField);
+	    		Scene popScene = new Scene(popLayout);
+	    		popup.setScene(popScene);
+	    		popup.show();
+	    	}else {
 	    	deltakerListe.add(new Deltaker(navnFelt.getText()));
 	    	
 	        File file = new File("deltaker.dat");
@@ -189,7 +202,7 @@ public class admapp extends Application{
 	        } catch (IOException ex) {
 	            ex.printStackTrace();
 	        }
-	    
+	    	
 	    	// Kopi på txt format
 	    	File file2 = new File("deltakerKopi.txt");
 			try(
@@ -207,6 +220,7 @@ public class admapp extends Application{
 				}
 	        navnFelt.setText("");
 	        System.out.println("Deltaker lagret");
+	    	}
 	    });
 	    
 	    seListe.setOnMouseClicked(e -> {
@@ -238,6 +252,8 @@ public class admapp extends Application{
 	    TextField navnFelt1 = new TextField();
 	    TextField navnFelt2 = new TextField();
 	    TextField datoTid   = new TextField();
+	    navnFelt1.setEditable(false);
+	    navnFelt2.setEditable(false);
 	  
 	    Text dato 		   = new Text("Dato og tid. Form(29.04.19 21:30)");
 
@@ -281,6 +297,18 @@ public class admapp extends Application{
 	    
 	    
 	    lagreParti.setOnMouseClicked(e -> {
+	    	if(navnFelt1.getText().isEmpty() || navnFelt2.getText().isEmpty() || datoTid.getText().isEmpty()) {
+	    		Stage popup = new Stage();
+	    		popup.setHeight(70);
+	    		popup.setWidth(280);
+	    		popup.setResizable(false);
+	    		popup.setTitle("Popup");
+	    		Text popField = new Text("Fyll inn felt..");
+	    		VBox popLayout = new VBox(popField);
+	    		Scene popScene = new Scene(popLayout);
+	    		popup.setScene(popScene);
+	    		popup.show();
+	    	}else {
 	    	partiListe.add(new Parti(navnFelt1.getText(), navnFelt2.getText(), datoTid.getText()));
 
 	    	File file = new File("partier.dat");
@@ -318,6 +346,7 @@ public class admapp extends Application{
 	        navnFelt2.setText("");
 	        datoTid.setText("");
 	        System.out.println("Sjakkparti lagret");
+	    	}
 	    });
 	    
 	    
@@ -461,7 +490,7 @@ public class admapp extends Application{
 	    	deltakerListe3.add(new Deltaker(navnFelt2.getText()));
 	    	datoListe.add(new Date());
 	    	resultatListe.add(new Resultat(resultatFelt.getText()));
-	    	// skriver til .dat fil, alle "resultater" får egen fil
+	    	// skriver til  fil, alle "resultater" får egen fil
 	    	File file = new File("resultat" + navnFelt1.getText() + navnFelt2.getText() + datoFelt.getText() + ".dat");
 	    	try {
 	    		FileOutputStream fos = new FileOutputStream(file);
